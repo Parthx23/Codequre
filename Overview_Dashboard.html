@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Codebase Explainer - Overview</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Chivo:wght@400;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#ffdbd2",
+                        "secondary": "#7a5900",
+                        "tertiary": "#a4371a",
+                        "primary-container": "#3c6ee1",
+                        "on-secondary-fixed": "#261900",
+                        "secondary-fixed-dim": "#fdbc13",
+                        "surface-container-highest": "#e5e2e1",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-tertiary-fixed": "#3c0800",
+                        "surface-variant": "#e5e2e1",
+                        "on-primary-fixed": "#001849",
+                        "on-surface": "#1c1b1b",
+                        "surface-bright": "#fcf9f8",
+                        "background": "#fcf9f8",
+                        "surface-dim": "#dcd9d9",
+                        "on-surface-variant": "#434653",
+                        "on-background": "#1c1b1b",
+                        "surface": "#fcf9f8",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#862205",
+                        "tertiary-container": "#c54f2f",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#fdbc13",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#ffdea3",
+                        "surface-container-high": "#ebe7e7",
+                        "outline-variant": "#c3c6d6",
+                        "on-secondary-fixed-variant": "#5d4200",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#dae1ff",
+                        "inverse-primary": "#b3c5ff",
+                        "on-tertiary-container": "#fffbff",
+                        "primary": "#1754c7",
+                        "outline": "#737685",
+                        "on-secondary-container": "#6b4d00",
+                        "surface-tint": "#1c57ca",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-fixed-dim": "#b3c5ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#003fa3",
+                        "inverse-surface": "#313030",
+                        "on-primary-container": "#fefcff",
+                        "surface-container": "#f0edec",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb4a1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "margin-edge": "32px",
+                        "shadow-offset": "8px",
+                        "border-weight": "4px"
+                    },
+                    "fontFamily": {
+                        "code-md": ["JetBrains Mono"],
+                        "display": ["Anton"],
+                        "headline-lg": ["Anton"],
+                        "headline-md": ["Anton"],
+                        "body-md": ["Chivo"],
+                        "headline-lg-mobile": ["Anton"],
+                        "body-lg": ["Chivo"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "code-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "display": ["80px", { "lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased flex selection:bg-primary-fixed selection:text-on-primary-fixed">
+<aside class="fixed left-0 top-0 h-screen w-72 border-r-border-weight border-on-surface shadow-[8px_0px_0px_0px_rgba(28,27,27,1)] flex flex-col p-6 gap-y-4 bg-surface z-50">
+<div class="mb-8 flex items-center gap-4">
+<div class="w-12 h-12 bg-primary flex items-center justify-center border-border-weight border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)]">
+<span class="material-symbols-outlined text-on-primary filled">memory</span>
+</div>
+<div>
+<h2 class="font-display text-headline-md text-on-surface uppercase tracking-tighter leading-none">ANALYSIS_BOT</h2>
+<span class="font-code-md text-code-md text-on-surface-variant block mt-1">v2.4.0_STABLE</span>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-y-2">
+<a class="flex items-center gap-3 px-4 py-3 font-code-md text-code-md bg-secondary-container text-on-secondary-container border-4 border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] translate-x-1 translate-y-1 transition-all" href="Overview_Dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+                Overview
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-code-md text-code-md text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all" href="File_Explorer.html">
+<span class="material-symbols-outlined">folder_open</span>
+                Explorer
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-code-md text-code-md text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all" href="Architecture_View.html">
+<span class="material-symbols-outlined">account_tree</span>
+                Architecture
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 font-code-md text-code-md text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all" href="AI_Chat_Assistant.html">
+<span class="material-symbols-outlined">smart_toy</span>
+                AI_Chat
+            </a>
+</nav>
+<div class="mt-auto flex flex-col gap-y-2 pt-6 border-t-border-weight border-on-surface">
+<button class="w-full py-3 font-headline-md text-headline-md uppercase bg-primary text-on-primary border-border-weight border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all active:bg-surface-tint">
+                UPGRADE_PLAN
+            </button>
+<div class="flex flex-col gap-y-1 mt-4">
+<a class="flex items-center gap-3 px-4 py-2 font-code-md text-code-md text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] transition-all" href="Overview_Dashboard.html">
+<span class="material-symbols-outlined">description</span>
+                    Docs
+                </a>
+<a class="flex items-center gap-3 px-4 py-2 font-code-md text-code-md text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] transition-all" href="Hero_Landing.html">
+<span class="material-symbols-outlined">logout</span>
+                    Logout
+                </a>
+</div>
+</div>
+</aside>
+<div class="flex-1 ml-72 flex flex-col min-h-screen">
+<header class="sticky top-0 z-40 flex h-20 w-full items-center justify-between px-margin-edge bg-surface border-b-4 border-on-surface">
+<div class="flex items-center gap-4 w-1/3">
+<div class="flex items-center bg-surface-container border-border-weight border-on-surface px-4 py-2 w-full focus-within:bg-secondary-fixed transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none outline-none font-code-md text-code-md text-on-surface w-full placeholder:text-on-surface-variant focus:ring-0" placeholder="Search codebase..." type="text"/>
+</div>
+</div>
+<div class="flex items-center justify-center w-1/3">
+<span class="font-display text-headline-md text-on-surface uppercase tracking-tighter">CODE_ZINE</span>
+</div>
+<div class="flex items-center justify-end gap-4 w-1/3">
+<button class="font-code-md text-code-md font-bold px-6 py-2 bg-secondary-container text-on-secondary-container border-border-weight border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all uppercase">
+                    SYNC_REPO
+                </button>
+<button class="w-10 h-10 flex items-center justify-center border-border-weight border-on-surface bg-surface hover:bg-secondary-container transition-all">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center border-border-weight border-on-surface bg-surface hover:bg-secondary-container transition-all">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 border-border-weight border-on-surface bg-tertiary-fixed overflow-hidden">
+<img alt="Developer Profile" class="w-full h-full object-cover" data-alt="A stylized, flat-color portrait illustration of a developer used as an avatar, fitting the minimalist light-mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsdlnUgsVA9g_jwW4xeEpIbkfYiNeAw13Zvk9fQrhIw6cdGnQXSmdn10k6qhQh4oyHnD616NYk4VTcuEKx6RednCTU3jntHmRAX2UeybtgNoBUwdPZ-SKdiZN8lAFI7UC4rQh4CwM1UYdahFkZcED0y124n12dojvCK3RWMjileWWazzfJNtqt2RmStD4d95qKmAv8YYdPh1qZkCsJRCqsNq8cKepeeI24Rfg6ZSjnRM7h7dZwzuVa7sVQ3bllqfZv05j-F2PIvHM"/>
+</div>
+</div>
+</header>
+<main class="flex-1 p-gutter max-w-7xl mx-auto w-full space-y-8 py-12">
+<section class="bg-surface border-border-weight border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] p-8 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-[120px]">code_blocks</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center gap-4 mb-4">
+<span class="px-3 py-1 bg-primary-fixed border-border-weight border-on-surface font-code-md text-code-md uppercase font-bold">Public</span>
+<h1 class="font-headline-lg text-headline-lg uppercase text-on-surface tracking-wide"><span id="dash-repo-name"></span></h1>
+</div>
+<p id="dash-desc" class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl mb-8">
+                        
+                    </p>
+<div id="dash-languages" class="flex flex-wrap gap-4"></div>
+</div>
+</section>
+<section class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="bg-secondary-fixed border-border-weight border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] p-6 flex flex-col justify-between aspect-square hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[12px_12px_0px_0px_rgba(28,27,27,1)] transition-all cursor-default">
+<div class="flex justify-between items-start">
+<span class="font-code-md text-code-md font-bold uppercase border-b-4 border-on-surface pb-1 inline-block">Stars</span>
+<span class="material-symbols-outlined text-on-surface">star</span>
+</div>
+<div id="dash-stars" class="font-display text-display text-on-surface mt-auto">--</div>
+</div>
+<div class="bg-tertiary-fixed border-border-weight border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] p-6 flex flex-col justify-between aspect-square hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[12px_12px_0px_0px_rgba(28,27,27,1)] transition-all cursor-default">
+<div class="flex justify-between items-start">
+<span class="font-code-md text-code-md font-bold uppercase border-b-4 border-on-surface pb-1 inline-block">Forks</span>
+<span class="material-symbols-outlined text-on-surface">fork_right</span>
+</div>
+<div id="dash-forks" class="font-display text-display text-on-surface mt-auto">--</div>
+</div>
+<div class="bg-primary-fixed border-border-weight border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] p-6 flex flex-col justify-between aspect-square hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[12px_12px_0px_0px_rgba(28,27,27,1)] transition-all cursor-default">
+<div class="flex justify-between items-start">
+<span class="font-code-md text-code-md font-bold uppercase border-b-4 border-on-surface pb-1 inline-block">Total Files</span>
+<span class="material-symbols-outlined text-on-surface">insert_drive_file</span>
+</div>
+<div id="dash-files" class="font-display text-display text-on-surface mt-auto">--</div>
+</div>
+<div class="bg-surface border-border-weight border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] p-6 flex flex-col items-center justify-center aspect-square relative">
+<span class="absolute top-6 left-6 font-code-md text-code-md font-bold uppercase z-10">Health</span>
+<div class="w-40 h-40 rounded-full border-[8px] border-on-surface flex items-center justify-center bg-secondary-container shadow-[inset_4px_4px_0px_0px_rgba(28,27,27,0.2)]">
+<span class="font-headline-lg text-headline-lg text-on-secondary-container">92</span>
+</div>
+</div>
+</section>
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<div class="col-span-1 flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface border-b-border-weight border-on-surface pb-2 w-max">Quick Insights</h2>
+<div id="dash-insights" class="flex flex-col gap-4"></div>
+</div>
+<div class="col-span-1 lg:col-span-2 flex flex-col gap-6">
+<h2 class="font-headline-md text-headline-md uppercase text-on-surface border-b-border-weight border-on-surface pb-2 w-max">Activity Log</h2>
+<div class="bg-on-surface border-border-weight border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] p-6 h-[340px] flex flex-col font-code-md text-code-md overflow-hidden relative">
+<div class="absolute top-0 left-0 w-full h-8 bg-surface-variant flex items-center px-4 border-b-border-weight border-on-surface gap-2">
+<div class="w-3 h-3 rounded-full bg-error border-2 border-on-surface"></div>
+<div class="w-3 h-3 rounded-full bg-secondary-container border-2 border-on-surface"></div>
+<div class="w-3 h-3 rounded-full bg-primary-container border-2 border-on-surface"></div>
+<span class="ml-4 font-code-md text-[10px] uppercase text-on-surface-variant tracking-widest">system_terminal</span>
+</div>
+<div class="flex-1 mt-8 overflow-y-auto space-y-2 text-surface-variant pt-2" id="dash-activity">
+<div class="flex items-center text-surface mt-4"><span class="text-tertiary-fixed mr-2">system@analysis:~</span> $ <span class="w-2 h-4 bg-surface ml-2 animate-pulse block"></span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<script src="js/app.js"></script>
+</body></html>

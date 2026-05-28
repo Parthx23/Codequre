@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Codebase Explainer</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Chivo:wght@400;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#ffdbd2",
+                        "secondary": "#7a5900",
+                        "tertiary": "#a4371a",
+                        "primary-container": "#3c6ee1",
+                        "on-secondary-fixed": "#261900",
+                        "secondary-fixed-dim": "#fdbc13",
+                        "surface-container-highest": "#e5e2e1",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-tertiary-fixed": "#3c0800",
+                        "surface-variant": "#e5e2e1",
+                        "on-primary-fixed": "#001849",
+                        "on-surface": "#1c1b1b",
+                        "surface-bright": "#fcf9f8",
+                        "background": "#fcf9f8",
+                        "surface-dim": "#dcd9d9",
+                        "on-surface-variant": "#434653",
+                        "on-background": "#1c1b1b",
+                        "surface": "#fcf9f8",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#862205",
+                        "tertiary-container": "#c54f2f",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#fdbc13",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#ffdea3",
+                        "surface-container-high": "#ebe7e7",
+                        "outline-variant": "#c3c6d6",
+                        "on-secondary-fixed-variant": "#5d4200",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#dae1ff",
+                        "inverse-primary": "#b3c5ff",
+                        "on-tertiary-container": "#fffbff",
+                        "primary": "#1754c7",
+                        "outline": "#737685",
+                        "on-secondary-container": "#6b4d00",
+                        "surface-tint": "#1c57ca",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-fixed-dim": "#b3c5ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#003fa3",
+                        "inverse-surface": "#313030",
+                        "on-primary-container": "#fefcff",
+                        "surface-container": "#f0edec",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb4a1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "margin-edge": "32px",
+                        "shadow-offset": "8px",
+                        "border-weight": "4px"
+                    },
+                    "fontFamily": {
+                        "code-md": ["JetBrains Mono"],
+                        "display": ["Anton"],
+                        "headline-lg": ["Anton"],
+                        "headline-md": ["Anton"],
+                        "body-md": ["Chivo"],
+                        "headline-lg-mobile": ["Anton"],
+                        "body-lg": ["Chivo"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "code-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "display": ["80px", { "lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .neo-shadow {
+            box-shadow: 8px 8px 0px 0px #1c1b1b;
+        }
+        .neo-shadow-sm {
+            box-shadow: 4px 4px 0px 0px #1c1b1b;
+        }
+        .neo-hover-interactive:hover {
+            transform: translate(4px, 4px);
+            box-shadow: 4px 4px 0px 0px #1c1b1b;
+        }
+        .neo-active-interactive:active {
+            transform: translate(8px, 8px);
+            box-shadow: 0px 0px 0px 0px #1c1b1b;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col overflow-x-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 flex h-20 w-full items-center justify-between px-margin-edge bg-surface border-b-4 border-on-surface bg-surface">
+<div class="flex items-center gap-4">
+<span class="font-display text-headline-md text-on-surface uppercase tracking-tighter">CODE_ZINE</span>
+</div>
+<div class="flex-1 max-w-md mx-8 hidden md:block">
+<div class="relative flex items-center w-full h-10 bg-surface-container-lowest border-4 border-on-surface neo-shadow-sm focus-within:translate-y-1 focus-within:translate-x-1 focus-within:box-shadow-none transition-transform">
+<span aria-hidden="true" class="material-symbols-outlined ml-3 text-on-surface" data-icon="search">search</span>
+<input class="w-full h-full bg-transparent border-none focus:ring-0 font-code-md text-code-md px-3 text-on-surface placeholder-on-surface-variant" placeholder="Search components, functions..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:flex items-center gap-2 bg-secondary-container text-on-secondary-container border-4 border-on-surface px-4 py-1 font-code-md text-code-md font-bold hover:bg-secondary-fixed transition-colors neo-shadow-sm active:translate-y-1 active:translate-x-1 active:shadow-none">
+<span class="material-symbols-outlined text-sm" data-icon="sync">sync</span>
+                SYNC_REPO
+            </button>
+<div class="flex items-center gap-2">
+<button class="p-2 border-4 border-transparent hover:border-on-surface transition-all hover:bg-secondary-container rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 border-4 border-transparent hover:border-on-surface transition-all hover:bg-secondary-container rounded-sm flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-10 w-10 border-4 border-on-surface overflow-hidden ml-2 bg-primary-container neo-shadow-sm">
+<img alt="Developer Profile" class="w-full h-full object-cover grayscale" data-alt="A striking digital portrait of a developer's avatar in a flat, neo-brutalist graphic style. The character has a stylized, almost comic-book appearance with thick black outlines and muted skin tones against a bright, flat yellow background. The lighting is non-existent, relying entirely on flat vector-like color blocking to define features. The overall mood is cool, confident, and highly stylized, fitting a modern technical zine aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDokP2M3jZzb44NyeYyyFQlScJ7JOhZGzU1R7vH88uJKpiEn90x8BRKa85NaMAQ-57HSKwNvM4317164EkiFhcTHXypPudZQx3y4cxsS1T6q1_hXFNaIerhSC387s819vVyFCnGfjiWh5UqylxMQ4TEG27efO4tky7zdXjHbYCNutwFUq5YVcnHMRtTXSROhI6Z5h3VeBIptoi07S1CCXUtD2aql6DWLu69MUK1LQ-vtxsrED9PRkVQvbZ8wA4x6vKq2LRhHeAvSyo"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 md:px-margin-edge py-12 md:py-24 relative">
+<!-- Background Decorations (Stickers) -->
+<div aria-hidden="true" class="absolute top-10 left-10 w-16 h-16 bg-secondary-fixed border-4 border-on-surface neo-shadow rotate-12 flex items-center justify-center hidden lg:flex">
+<span class="material-symbols-outlined text-4xl" data-weight="fill">star</span>
+</div>
+<div aria-hidden="true" class="absolute bottom-40 right-10 w-20 h-20 bg-tertiary-container rounded-full border-4 border-on-surface neo-shadow -rotate-12 flex items-center justify-center hidden lg:flex">
+<span class="material-symbols-outlined text-5xl text-on-tertiary-container">arrow_forward</span>
+</div>
+<div aria-hidden="true" class="absolute top-1/2 right-0 w-12 h-12 bg-primary border-4 border-on-surface rotate-45 hidden lg:block"></div>
+<!-- Hero Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<!-- Left: Text & Input -->
+<div class="lg:col-span-7 flex flex-col gap-8 z-10">
+<div class="inline-block bg-primary-fixed border-4 border-on-surface px-4 py-2 w-max neo-shadow-sm">
+<span class="font-code-md text-code-md font-bold uppercase tracking-widest text-on-surface">System Status: Ready</span>
+</div>
+<h1 class="font-display text-headline-lg-mobile md:text-display text-on-surface uppercase leading-none">
+                    Decode <br/><span class="text-primary bg-primary-fixed-dim px-2">The Chaos.</span>
+</h1>
+<p class="font-body-md text-body-lg text-on-surface-variant max-w-xl border-l-4 border-primary pl-4 py-1">
+                    Feed us your messiest, undocumented repository. Our AI-driven analysis engine untangles dependencies, maps architecture, and translates spaghetti code into crystal-clear insights.
+                </p>
+<div class="mt-4 flex flex-col sm:flex-row gap-4 max-w-2xl">
+<div class="flex-1 relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant z-10" data-icon="link">link</span>
+<input class="w-full h-16 pl-12 pr-4 bg-surface-container-lowest border-4 border-on-surface font-code-md text-body-md text-on-surface placeholder-outline focus:outline-none focus:border-primary focus:ring-0 neo-shadow transition-all duration-200 focus:translate-x-1 focus:translate-y-1 focus:shadow-[4px_4px_0px_0px_#1c1b1b]" id="repo-input" placeholder="https://github.com/your/repo" type="url"/>
+</div>
+<button id="analyze-btn" class="h-16 px-8 bg-primary text-on-primary border-4 border-on-surface font-headline-md text-headline-md uppercase whitespace-nowrap neo-shadow neo-hover-interactive neo-active-interactive transition-all duration-200 flex items-center justify-center gap-2">
+                        Analyze Now
+                        <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<span class="font-code-md text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-tertiary" data-icon="verified">verified</span>
+                        Supports GitHub, GitLab, Bitbucket
+                    </span>
+</div>
+</div>
+<!-- Right: Illustration -->
+<div class="lg:col-span-5 mt-12 lg:mt-0 relative">
+<div class="relative w-full aspect-square max-w-[500px] mx-auto">
+<!-- Background framing for illustration -->
+<div class="absolute inset-4 bg-surface-variant border-4 border-on-surface neo-shadow translate-x-4 translate-y-4"></div>
+<div class="absolute inset-0 bg-secondary-fixed-dim border-4 border-on-surface neo-shadow overflow-hidden flex items-center justify-center p-8">
+<img alt="Robot inspecting code" class="w-full h-full object-cover mix-blend-luminosity opacity-80" data-alt="A highly stylized, neo-brutalist vector illustration of a quirky, boxy robot examining a chaotic jumble of geometric blocks representing code. The color palette is restricted to stark blacks, whites, and vivid, flat accents of primary blue and mustard yellow. The lighting is completely flat, rejecting any gradients or soft shadows in favor of heavy 4px black outlines and solid color fills. The mood is playful, technical, and distinctly reminiscent of an edgy, modern risograph print zine." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMoxdGLPGBM2kFJJguqDOTQ0Kh4olX932l-1vRZbERCwpY3Wzz5Np29Ugh2UIgKju95zI0V8JwAD22YtsfNoMGw6CInwmdwhRfO78sMPHxN2okZT7qNUtZjXcmh3tiEbOTChywDWiAM9tVDuvGHRYm09dEhHDw3JXRE3lNC1IpQmV1prbWeviYTOLBXqc_DY1zbI07VEXl7h2dOpQe8NowB-E_JWf80XhEwsginC2D9OgamUu6nDUNGZCmCWH9p3TgRX-SwzzSAqo"/>
+</div>
+<!-- Floating contextual UI pieces -->
+<div class="absolute -right-6 top-1/4 bg-surface border-4 border-on-surface p-3 neo-shadow flex flex-col gap-2">
+<div class="h-2 w-16 bg-error"></div>
+<div class="h-2 w-12 bg-on-surface-variant"></div>
+<div class="h-2 w-20 bg-on-surface-variant"></div>
+</div>
+<div class="absolute -left-4 bottom-1/4 bg-surface border-4 border-on-surface p-2 neo-shadow flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="bug_report">bug_report</span>
+<span class="font-code-md text-label-sm">Found: 42</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Trust / Feature Cards (Bento Grid Style) -->
+<div class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-high border-4 border-on-surface p-6 neo-shadow hover:-translate-y-2 transition-transform duration-300 flex flex-col gap-4">
+<div class="w-12 h-12 bg-primary-container border-4 border-on-surface flex items-center justify-center neo-shadow-sm mb-4">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="smart_toy">smart_toy</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface uppercase border-b-4 border-on-surface pb-2">AI Architecture</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    Our models read context, not just syntax. We identify design patterns, anti-patterns, and core logic flows automatically.
+                </p>
+</div>
+<div class="bg-surface-container-low border-4 border-on-surface p-6 neo-shadow hover:-translate-y-2 transition-transform duration-300 flex flex-col gap-4">
+<div class="w-12 h-12 bg-secondary-container border-4 border-on-surface flex items-center justify-center neo-shadow-sm mb-4">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="account_tree">account_tree</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface uppercase border-b-4 border-on-surface pb-2">Dependency Map</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    Visualize exactly how every component, module, and package connects. Identify bottlenecks before you refactor.
+                </p>
+</div>
+<div class="bg-surface border-4 border-on-surface p-6 neo-shadow hover:-translate-y-2 transition-transform duration-300 flex flex-col gap-4">
+<div class="w-12 h-12 bg-tertiary-container border-4 border-on-surface flex items-center justify-center neo-shadow-sm mb-4">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="quick_reference_all">quick_reference_all</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface uppercase border-b-4 border-on-surface pb-2">Instant Docs</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    Generate comprehensive, readable documentation for legacy codebases in seconds. Stop guessing, start building.
+                </p>
+</div>
+</div>
+</main>
+<script src="js/app.js"></script>
+</body></html>

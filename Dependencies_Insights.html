@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CODE_ZINE - Dependencies &amp; Insights</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Notebook Lines Pattern */
+        .notebook-lines {
+            background-image: repeating-linear-gradient(transparent, transparent 31px, #c3c6d6 31px, #c3c6d6 32px);
+            background-position: 0 40px;
+        }
+    </style>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#ffdbd2",
+                    "secondary": "#7a5900",
+                    "tertiary": "#a4371a",
+                    "primary-container": "#3c6ee1",
+                    "on-secondary-fixed": "#261900",
+                    "secondary-fixed-dim": "#fdbc13",
+                    "surface-container-highest": "#e5e2e1",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-tertiary-fixed": "#3c0800",
+                    "surface-variant": "#e5e2e1",
+                    "on-primary-fixed": "#001849",
+                    "on-surface": "#1c1b1b",
+                    "surface-bright": "#fcf9f8",
+                    "background": "#fcf9f8",
+                    "surface-dim": "#dcd9d9",
+                    "on-surface-variant": "#434653",
+                    "on-background": "#1c1b1b",
+                    "surface": "#fcf9f8",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#862205",
+                    "tertiary-container": "#c54f2f",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#fdbc13",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#ffdea3",
+                    "surface-container-high": "#ebe7e7",
+                    "outline-variant": "#c3c6d6",
+                    "on-secondary-fixed-variant": "#5d4200",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#dae1ff",
+                    "inverse-primary": "#b3c5ff",
+                    "on-tertiary-container": "#fffbff",
+                    "primary": "#1754c7",
+                    "outline": "#737685",
+                    "on-secondary-container": "#6b4d00",
+                    "surface-tint": "#1c57ca",
+                    "surface-container-low": "#f6f3f2",
+                    "primary-fixed-dim": "#b3c5ff",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#003fa3",
+                    "inverse-surface": "#313030",
+                    "on-primary-container": "#fefcff",
+                    "surface-container": "#f0edec",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb4a1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "unit": "4px",
+                    "margin-edge": "32px",
+                    "shadow-offset": "8px",
+                    "border-weight": "4px"
+            },
+            "fontFamily": {
+                    "code-md": ["JetBrains Mono", "monospace"],
+                    "display": ["Anton", "sans-serif"],
+                    "headline-lg": ["Anton", "sans-serif"],
+                    "headline-md": ["Anton", "sans-serif"],
+                    "body-md": ["Chivo", "sans-serif"],
+                    "headline-lg-mobile": ["Anton", "sans-serif"],
+                    "body-lg": ["Chivo", "sans-serif"],
+                    "label-sm": ["JetBrains Mono", "monospace"]
+            },
+            "fontSize": {
+                    "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display": ["80px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "32px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Chivo:wght@400;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden selection:bg-primary selection:text-on-primary">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar -->
+<nav class="hidden md:flex flex-col h-full w-72 p-6 gap-y-4 bg-surface dark:bg-surface-container border-r-[4px] border-on-surface shadow-[8px_0px_0px_0px_rgba(28,27,27,1)] fixed left-0 top-0 z-50">
+<!-- Header -->
+<div class="mb-8 flex items-center gap-4">
+<div class="w-12 h-12 bg-primary flex items-center justify-center border-[4px] border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)]">
+<span class="material-symbols-outlined text-on-primary" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<h2 class="font-display text-headline-md text-on-surface uppercase tracking-tighter">ANALYSIS_BOT</h2>
+<p class="font-code-md text-label-sm text-on-surface-variant">v2.4.0_STABLE</p>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex-1 flex flex-col gap-2">
+<!-- Active Tab: Overview (Semantic Match for Insights) -->
+<a class="flex items-center gap-3 p-3 bg-secondary-container text-on-secondary-container border-[4px] border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] translate-x-1 translate-y-1 font-code-md text-code-md uppercase transition-transform" href="Overview_Dashboard.html">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+                    Overview
+                </a>
+<!-- Inactive Tabs -->
+<a class="flex items-center gap-3 p-3 text-on-surface border-[4px] border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all font-code-md text-code-md uppercase" href="File_Explorer.html">
+<span class="material-symbols-outlined">folder_open</span>
+                    Explorer
+                </a>
+<a class="flex items-center gap-3 p-3 text-on-surface border-[4px] border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all font-code-md text-code-md uppercase" href="Architecture_View.html">
+<span class="material-symbols-outlined">account_tree</span>
+                    Architecture
+                </a>
+<a class="flex items-center gap-3 p-3 text-on-surface border-[4px] border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all font-code-md text-code-md uppercase" href="AI_Chat_Assistant.html">
+<span class="material-symbols-outlined">smart_toy</span>
+                    AI_Chat
+                </a>
+</div>
+<!-- Footer & CTA -->
+<div class="mt-auto flex flex-col gap-4 border-t-[4px] border-on-surface pt-6">
+<button class="w-full bg-primary text-on-primary font-headline-md text-headline-md uppercase border-[4px] border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] p-3 hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] active:translate-x-2 active:translate-y-2 active:shadow-none transition-all">
+                    UPGRADE_PLAN
+                </button>
+<a class="flex items-center gap-3 p-2 text-on-surface hover:bg-surface-container-high transition-all font-code-md text-code-md" href="Overview_Dashboard.html">
+<span class="material-symbols-outlined">description</span>
+                    Docs
+                </a>
+<a class="flex items-center gap-3 p-2 text-on-surface hover:bg-surface-container-high transition-all font-code-md text-code-md" href="Hero_Landing.html">
+<span class="material-symbols-outlined">logout</span>
+                    Logout
+                </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-72 flex flex-col h-full overflow-y-auto bg-background">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 flex h-20 w-full items-center justify-between px-margin-edge bg-surface border-b-[4px] border-on-surface shadow-none">
+<!-- Left: Brand (Mobile) or Search -->
+<div class="flex items-center gap-4">
+<div class="md:hidden flex items-center">
+<span class="font-display text-headline-md text-on-surface uppercase tracking-tighter">CODE_ZINE</span>
+</div>
+<div class="hidden md:flex items-center border-[4px] border-on-surface bg-surface-container-lowest px-4 py-2 focus-within:border-primary focus-within:bg-surface-bright transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 font-code-md text-code-md w-64 placeholder-on-surface-variant" placeholder="Search paths, symbols, issues..." type="text"/>
+</div>
+</div>
+<!-- Right: Actions -->
+<div class="flex items-center gap-6">
+<button class="hidden md:flex items-center gap-2 bg-secondary-container text-on-secondary-container font-code-md text-code-md uppercase border-[4px] border-on-surface px-4 py-2 shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+                        SYNC_REPO
+                    </button>
+<div class="flex items-center gap-4 border-l-[4px] border-on-surface pl-6">
+<button class="text-on-surface hover:text-primary transition-colors hover:-translate-y-1 transform duration-200">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface hover:text-primary transition-colors hover:-translate-y-1 transform duration-200">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 border-[4px] border-on-surface bg-tertiary-fixed overflow-hidden shadow-[4px_4px_0px_0px_rgba(28,27,27,1)]">
+<img alt="Developer Profile" class="w-full h-full object-cover grayscale" data-alt="A high-contrast, black and white portrait of a focused developer, styled with a gritty, halftone dot texture reminiscent of a vintage punk rock zine. The lighting is harsh and directional, creating strong shadows. The overall aesthetic aligns with a premium neo-brutalist digital interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT7l7WAdb5pKMgzd_FSaqqewhkVI1-GeXTGECOxCo-WoB7sGgrX0D_EL3e3h5MdZ0rV4inAZAGgD0gyjctmjQqtvjLV54nmumkA25yOuLZ1hKKIRRpVQ_R9hM2zC2jzqqljSXbJP_GT2xpWhJsRPVTcD5V_KroVE77blA3qRGEuFwUzEHqDfxhiGEXS4tHgpX2Bs1rQmpOj00zqNcul3ELU8mI3yUV69V43s7lif8rVHHkc5ZYX-rt6t9rJuH89YOs-6myCvwLPTk"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Canvas -->
+<div class="p-gutter md:p-8 max-w-7xl mx-auto w-full flex flex-col gap-8 pb-32">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b-[4px] border-on-surface pb-6 relative">
+<!-- Decorative Star -->
+<div class="absolute -top-4 -right-4 w-12 h-12 bg-secondary-fixed-dim border-[4px] border-on-surface rotate-12 flex items-center justify-center z-10 hidden md:flex">
+<span class="material-symbols-outlined text-on-surface">star</span>
+</div>
+<div>
+<h1 class="font-display text-headline-lg-mobile md:text-display text-on-surface uppercase tracking-tighter leading-none mb-2">Insights &amp;<br/>Dependencies</h1>
+<p class="font-body-md text-on-surface-variant max-w-xl">Analysis completed across 4,201 files. Critical vulnerabilities detected in core routing logic. Immediate attention required.</p>
+</div>
+</div>
+<!-- Metrics Stickers -->
+<div class="flex flex-wrap gap-4">
+<div class="bg-primary-fixed text-on-primary-fixed border-[4px] border-on-surface px-4 py-2 font-code-md text-code-md uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">account_tree</span>
+                        Total Deps: 142
+                    </div>
+<div class="bg-error-container text-on-error-container border-[4px] border-on-surface px-4 py-2 font-code-md text-code-md uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+                        Critical: 3
+                    </div>
+<div class="bg-secondary-container text-on-secondary-container border-[4px] border-on-surface px-4 py-2 font-code-md text-code-md uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">build</span>
+                        Refactors: 12
+                    </div>
+<div class="bg-tertiary-fixed text-on-tertiary-fixed border-[4px] border-on-surface px-4 py-2 font-code-md text-code-md uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">menu_book</span>
+                        Doc Coverage: 68%
+                    </div>
+</div>
+<!-- Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Critical Dependencies (Danger Card) -->
+<div class="col-span-1 md:col-span-6 bg-surface border-[4px] border-error shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] flex flex-col group hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] transition-all duration-200">
+<div class="p-4 border-b-[4px] border-error bg-error-container flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-error-container uppercase">Critical Vulnerabilities</h3>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">error</span>
+</div>
+<div class="p-6 flex-1 flex flex-col gap-4">
+<!-- Slabs -->
+<div class="border-b-[4px] border-on-surface pb-4">
+<div class="flex justify-between items-start mb-2">
+<span class="font-code-md text-code-md text-on-surface bg-surface-container px-2 py-1 border-[2px] border-on-surface">express-auth@1.4.2</span>
+<span class="font-label-sm text-error uppercase font-bold tracking-widest">CVE-2023-4412</span>
+</div>
+<p class="font-body-md text-on-surface-variant">Path traversal vulnerability in static file serving middleware. Update to &gt;= 1.5.0 immediately.</p>
+<div class="mt-3 font-code-md text-label-sm text-on-surface opacity-70">
+                                    &gt; located in /src/middleware/auth.ts:42
+                                </div>
+</div>
+<div class="border-b-[4px] border-on-surface pb-4">
+<div class="flex justify-between items-start mb-2">
+<span class="font-code-md text-code-md text-on-surface bg-surface-container px-2 py-1 border-[2px] border-on-surface">yaml-parser@0.9.1</span>
+<span class="font-label-sm text-error uppercase font-bold tracking-widest">High Risk</span>
+</div>
+<p class="font-body-md text-on-surface-variant">Arbitrary code execution via unsafe YAML deserialization in config loader.</p>
+<div class="mt-3 font-code-md text-label-sm text-on-surface opacity-70">
+                                    &gt; located in /config/loader.js:12
+                                </div>
+</div>
+</div>
+<div class="p-4 border-t-[4px] border-error bg-surface-container-lowest">
+<button class="w-full bg-error text-on-error font-code-md text-code-md uppercase border-[4px] border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] py-2 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all active:bg-on-error-container">
+                                AUTO-PATCH ALL
+                            </button>
+</div>
+</div>
+<!-- Suggested Refactors (Warning Card) -->
+<div class="col-span-1 md:col-span-6 bg-surface border-[4px] border-secondary-container shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] flex flex-col group hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] transition-all duration-200">
+<div class="p-4 border-b-[4px] border-secondary-container bg-secondary-fixed flex items-center justify-between">
+<h3 class="font-headline-md text-headline-md text-on-secondary-container uppercase">Suggested Refactors</h3>
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<div class="p-6 flex-1 flex flex-col gap-6">
+<!-- Refactor Item -->
+<div class="relative pl-6 border-l-[4px] border-secondary-container">
+<div class="absolute -left-[14px] top-0 w-6 h-6 bg-secondary-fixed border-[4px] border-on-surface rounded-full flex items-center justify-center">
+<div class="w-2 h-2 bg-on-surface rounded-full"></div>
+</div>
+<h4 class="font-headline-md text-[18px] text-on-surface uppercase mb-1">Extract God Class</h4>
+<p class="font-body-md text-on-surface-variant mb-3">`DataProcessorService` exceeds 1,200 lines. Split into specialized handlers for SRP compliance.</p>
+<div class="bg-inverse-surface text-inverse-on-surface p-3 font-code-md text-label-sm overflow-x-auto border-[4px] border-on-surface">
+<span class="text-tertiary-fixed">- class DataProcessorService {</span><br/>
+<span class="text-primary-fixed-dim">+ class UserDataHandler {</span><br/>
+<span class="text-primary-fixed-dim">+ class PaymentDataHandler {</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Automated Documentation (Notebook Style) -->
+<div class="col-span-1 md:col-span-12 bg-surface-bright border-[4px] border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] relative mt-4 notebook-lines p-8 md:p-12 overflow-hidden">
+<!-- Notebook Binding Holes (Decorative) -->
+<div class="absolute left-4 top-0 bottom-0 flex flex-col justify-between py-8">
+<div class="w-6 h-6 bg-background border-[4px] border-on-surface rounded-full shadow-inner"></div>
+<div class="w-6 h-6 bg-background border-[4px] border-on-surface rounded-full shadow-inner"></div>
+<div class="w-6 h-6 bg-background border-[4px] border-on-surface rounded-full shadow-inner"></div>
+<div class="w-6 h-6 bg-background border-[4px] border-on-surface rounded-full shadow-inner"></div>
+<div class="w-6 h-6 bg-background border-[4px] border-on-surface rounded-full shadow-inner"></div>
+</div>
+<div class="pl-12">
+<div class="border-b-[4px] border-on-surface pb-4 mb-8 flex justify-between items-end">
+<h2 class="font-display text-headline-lg text-on-surface uppercase tracking-tighter">Auto-Generated Spec</h2>
+<span class="font-code-md text-code-md text-on-surface-variant bg-surface px-2 border-[2px] border-on-surface">Updated: 2 mins ago</span>
+</div>
+<div class="prose prose-lg max-w-none font-body-md text-on-surface">
+<h3 class="font-headline-md text-[24px] uppercase bg-surface-dim inline-block px-2 border-[2px] border-on-surface mb-4">Architecture Overview</h3>
+<p class="mb-6 leading-relaxed bg-surface-bright/80 p-1">
+                                    The core system implements a CQRS pattern across the primary microservices. Commands are dispatched via the <span class="font-code-md font-bold bg-primary-fixed px-1 border-[2px] border-on-surface">EventBusAdapter</span>, while queries are routed directly to read-replicas optimized for heavy geospatial indexing.
+                                </p>
+<h3 class="font-headline-md text-[24px] uppercase bg-surface-dim inline-block px-2 border-[2px] border-on-surface mb-4 mt-8">Recent Topology Shifts</h3>
+<ul class="list-none space-y-4 font-body-md">
+<li class="flex items-start gap-3 bg-surface-bright/80 p-1">
+<span class="material-symbols-outlined mt-1 text-primary">arrow_right_alt</span>
+<span>Authentication flow moved from <span class="font-code-md font-bold">/v1/auth</span> monolithic controller to standalone <span class="font-code-md font-bold text-tertiary-container">OAuth2 Edge Gateway</span>.</span>
+</li>
+<li class="flex items-start gap-3 bg-surface-bright/80 p-1">
+<span class="material-symbols-outlined mt-1 text-primary">arrow_right_alt</span>
+<span>Deprecated <span class="font-code-md font-bold text-on-surface-variant line-through">LegacySyncManager</span> in favor of WebSocket-driven state hydration.</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="js/app.js"></script>
+</body></html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta http-equiv="refresh" content="3;url=Overview_Dashboard.html">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CODE_ZINE - Loading State</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Chivo:wght@400;700&amp;family=JetBrains+Mono:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+                    "tertiary-fixed": "#ffdbd2",
+                    "secondary": "#7a5900",
+                    "tertiary": "#a4371a",
+                    "primary-container": "#3c6ee1",
+                    "on-secondary-fixed": "#261900",
+                    "secondary-fixed-dim": "#fdbc13",
+                    "surface-container-highest": "#e5e2e1",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-tertiary-fixed": "#3c0800",
+                    "surface-variant": "#e5e2e1",
+                    "on-primary-fixed": "#001849",
+                    "on-surface": "#1c1b1b",
+                    "surface-bright": "#fcf9f8",
+                    "background": "#fcf9f8",
+                    "surface-dim": "#dcd9d9",
+                    "on-surface-variant": "#434653",
+                    "on-background": "#1c1b1b",
+                    "surface": "#fcf9f8",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#862205",
+                    "tertiary-container": "#c54f2f",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#fdbc13",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#ffdea3",
+                    "surface-container-high": "#ebe7e7",
+                    "outline-variant": "#c3c6d6",
+                    "on-secondary-fixed-variant": "#5d4200",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#dae1ff",
+                    "inverse-primary": "#b3c5ff",
+                    "on-tertiary-container": "#fffbff",
+                    "primary": "#1754c7",
+                    "outline": "#737685",
+                    "on-secondary-container": "#6b4d00",
+                    "surface-tint": "#1c57ca",
+                    "surface-container-low": "#f6f3f2",
+                    "primary-fixed-dim": "#b3c5ff",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#003fa3",
+                    "inverse-surface": "#313030",
+                    "on-primary-container": "#fefcff",
+                    "surface-container": "#f0edec",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb4a1"
+            },
+            borderRadius: {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            spacing: {
+                    "gutter": "24px",
+                    "unit": "4px",
+                    "margin-edge": "32px",
+                    "shadow-offset": "8px",
+                    "border-weight": "4px"
+            },
+            fontFamily: {
+                    "code-md": ["JetBrains Mono"],
+                    "display": ["Anton"],
+                    "headline-lg": ["Anton"],
+                    "headline-md": ["Anton"],
+                    "body-md": ["Chivo"],
+                    "headline-lg-mobile": ["Anton"],
+                    "body-lg": ["Chivo"],
+                    "label-sm": ["JetBrains Mono"]
+            },
+            fontSize: {
+                    "code-md": ["14px", { lineHeight: "20px", fontWeight: "500" }],
+                    "display": ["80px", { lineHeight: "80px", letterSpacing: "-0.02em", fontWeight: "400" }],
+                    "headline-lg": ["48px", { lineHeight: "48px", letterSpacing: "0.02em", fontWeight: "400" }],
+                    "headline-md": ["24px", { lineHeight: "28px", fontWeight: "400" }],
+                    "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                    "headline-lg-mobile": ["32px", { lineHeight: "32px", fontWeight: "400" }],
+                    "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                    "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .neo-shadow {
+            box-shadow: var(--tw-spacing-shadow-offset) var(--tw-spacing-shadow-offset) 0px 0px var(--tw-colors-on-surface);
+        }
+        .neo-shadow-sm {
+            box-shadow: 4px 4px 0px 0px var(--tw-colors-on-surface);
+        }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .scan-line {
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        
+        .pattern-bg {
+            background-image: radial-gradient(var(--tw-colors-outline-variant) 2px, transparent 2px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col antialiased selection:bg-secondary-container selection:text-on-secondary-container pattern-bg">
+<!-- TopAppBar from JSON -->
+<header class="sticky top-0 z-40 flex h-20 w-full items-center justify-between px-margin-edge bg-surface dark:bg-surface-container-highest border-b-border-weight border-on-surface flat no shadows on bar container">
+<div class="flex items-center gap-gutter">
+<span class="font-display text-headline-md text-on-surface dark:text-on-surface uppercase tracking-tighter">CODE_ZINE</span>
+</div>
+<div class="flex-1 max-w-md mx-gutter hidden md:block">
+<!-- Search bar placeholder -->
+</div>
+<div class="flex items-center gap-gutter">
+<button class="bg-surface hover:bg-secondary-container transition-all duration-200 border-border-weight border-transparent hover:border-on-surface p-2 font-code-md text-code-md text-primary dark:text-primary-fixed Active elements translate-y-1 shadow-none transition-transform">
+                SYNC_REPO
+            </button>
+<button class="hover:bg-secondary-container transition-all duration-200 p-2 Active elements translate-y-1 shadow-none transition-transform">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-secondary-container transition-all duration-200 p-2 Active elements translate-y-1 shadow-none transition-transform">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" data-icon="settings">settings</span>
+</button>
+<img alt="Developer Profile" class="w-10 h-10 border-2 border-on-surface object-cover" data-alt="A small square profile picture of a young professional developer looking focused. The lighting is bright and even, matching a modern light-mode interface. The image is cropped tightly around the face and shoulders, fitting perfectly into a technical, neo-brutalist dashboard design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9IrXutslBawPIggbKwVQY5CtLsqk1aNHAr0LEMuM9of7aQTn1iemDwL4-j20qvpZSsKBSe9BRy8R9-nbTwR1-sJCVZb-OFLSJkpG1IkYClALCwqpEsWmNsx8GNhfZQQJ2zSnGml962SJ5x9MvznTmeEoBtw_Qm0AkSyj6SbSEtIGE-wWLqThh3L_TyIvl0eYGEGjk7vo5H8mwKGK-GI3C-mwSYqiVxTKvliL4FRzQxDDi4avakkhml9av2_A_L6OLTsqe93fBGmk"/>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- SideNavBar from JSON. Suppressed here because Loading is a linear/transactional state -->
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col items-center justify-center p-gutter md:p-margin-edge w-full max-w-6xl mx-auto">
+<div class="w-full max-w-3xl bg-surface border-border-weight border-on-surface neo-shadow flex flex-col mb-gutter relative overflow-hidden">
+<!-- Header -->
+<div class="p-gutter border-b-border-weight border-on-surface bg-surface flex justify-between items-center z-10">
+<div>
+<h1 class="font-headline-lg text-headline-lg md:font-display md:text-display text-on-surface">ANALYZING...</h1>
+<p class="font-code-md text-code-md text-on-surface-variant uppercase tracking-widest mt-unit">Target: github.com/user/core-engine</p>
+</div>
+<div class="hidden md:block">
+<span class="font-code-md text-code-md bg-secondary-container text-on-secondary-container px-3 py-1 border-2 border-on-surface">EST: 45s</span>
+</div>
+</div>
+<!-- Progress Segmented Bar -->
+<div class="w-full h-8 bg-surface border-b-border-weight border-on-surface flex z-10">
+<div class="w-1/4 h-full bg-primary border-r-border-weight border-on-surface"></div>
+<div class="w-1/4 h-full bg-primary border-r-border-weight border-on-surface"></div>
+<div class="w-1/4 h-full bg-primary-fixed border-r-border-weight border-on-surface relative overflow-hidden">
+<div class="absolute inset-0 bg-primary w-1/2"></div>
+</div>
+<div class="w-1/4 h-full bg-surface-container-highest"></div>
+</div>
+<!-- Stages Content -->
+<div class="p-gutter bg-surface flex flex-col md:flex-row gap-gutter z-10">
+<!-- Left: Illustration -->
+<div class="w-full md:w-1/3 flex items-center justify-center border-border-weight border-on-surface bg-primary-fixed p-4 relative overflow-hidden h-64 neo-shadow-sm">
+<div class="absolute inset-0 flex justify-center w-full">
+<div class="w-full h-2 bg-secondary scan-line opacity-50 z-20"></div>
+</div>
+<img alt="Scanning Illustration" class="w-full h-full object-cover mix-blend-luminosity opacity-80" data-alt="A highly stylized, quirky digital illustration of a retro-futuristic robot diligently scanning a massive stack of oversized, physical manila folders. The scene is rendered in flat, vibrant colors with thick, heavy black outlines, perfectly matching a premium neo-brutalist aesthetic. The background is a stark, bright light-mode white with subtle geometric accent shapes floating around the robot. The overall mood is playful yet industrious." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpMZ7xLzoOV0KxTwJsC5tptq_hbhdZrY-_hPgIqBUDK4vbwbnlAB0tqRk1C0D85L8RUJsztky6JwTnzscviYlsnghFyokVjJnkQhgvTJqJjvbs2orNHqau6JiaMdHUzo0-sVUgRI_McbzvKXv19ITXJ9q-pjRmtNVxEdBhuDjWLtmz1fs3MzlNRK4nqgtP4sm3G6ZiL1D99duqkyoRdnmjRzNtiYKHaLjqnyffoqR40W9bNcWsir3NX9hoLseHWH4SPgDTKxUyxkw"/>
+<div class="absolute top-2 right-2 bg-surface border-2 border-on-surface p-1">
+<span class="material-symbols-outlined text-on-surface" data-icon="search">search</span>
+</div>
+</div>
+<!-- Right: Stages List -->
+<div class="w-full md:w-2/3 flex flex-col gap-unit">
+<!-- Stage 1: Done -->
+<div class="flex items-center justify-between p-4 border-border-weight border-on-surface bg-surface neo-shadow-sm mb-unit transition-all hover:-translate-y-1 hover:-translate-x-1">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 bg-tertiary-container flex items-center justify-center border-2 border-on-surface text-on-tertiary">
+<span class="material-symbols-outlined font-bold" data-icon="check">check</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md leading-none">Scanning Repository</p>
+<p class="font-code-md text-code-md text-outline">1,204 files indexed</p>
+</div>
+</div>
+</div>
+<!-- Stage 2: Done -->
+<div class="flex items-center justify-between p-4 border-border-weight border-on-surface bg-surface neo-shadow-sm mb-unit transition-all hover:-translate-y-1 hover:-translate-x-1">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 bg-tertiary-container flex items-center justify-center border-2 border-on-surface text-on-tertiary">
+<span class="material-symbols-outlined font-bold" data-icon="check">check</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md leading-none">Mapping Dependencies</p>
+<p class="font-code-md text-code-md text-outline">Graph constructed</p>
+</div>
+</div>
+</div>
+<!-- Stage 3: Active -->
+<div class="flex items-center justify-between p-4 border-border-weight border-on-surface bg-secondary-container neo-shadow-sm mb-unit transform -translate-y-1 -translate-x-1">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 bg-surface flex items-center justify-center border-2 border-on-surface text-on-surface animate-spin">
+<span class="material-symbols-outlined font-bold" data-icon="sync">sync</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md leading-none text-on-secondary-container">Generating Insights</p>
+<p class="font-code-md text-code-md text-on-secondary-container/80">Running AI models...</p>
+</div>
+</div>
+</div>
+<!-- Stage 4: Pending -->
+<div class="flex items-center justify-between p-4 border-border-weight border-outline-variant bg-surface-container-highest opacity-70">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 bg-surface flex items-center justify-center border-2 border-outline-variant text-outline-variant">
+<span class="font-code-md font-bold">4</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md leading-none text-on-surface-variant">Finalizing Report</p>
+<p class="font-code-md text-code-md text-outline">Awaiting previous steps</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Terminal Log -->
+<div class="w-full max-w-3xl bg-inverse-surface text-inverse-on-surface border-border-weight border-on-surface neo-shadow p-4 font-code-md text-code-md h-48 overflow-y-auto">
+<div class="flex gap-2 items-center mb-2 border-b border-outline pb-2">
+<div class="w-3 h-3 bg-error rounded-full"></div>
+<div class="w-3 h-3 bg-secondary rounded-full"></div>
+<div class="w-3 h-3 bg-primary rounded-full"></div>
+<span class="ml-2 text-outline">ANALYSIS_LOG</span>
+</div>
+<div class="space-y-1">
+<p><span class="text-secondary-fixed-dim">[INFO]</span> Initializing parser for AST...</p>
+<p><span class="text-secondary-fixed-dim">[INFO]</span> Found 42 endpoints in /api/v1</p>
+<p><span class="text-tertiary-fixed-dim">[WARN]</span> Cyclic dependency detected in AuthModule. Resolving...</p>
+<p><span class="text-secondary-fixed-dim">[INFO]</span> Calculating complexity metrics for src/core...</p>
+<p><span class="text-primary-fixed-dim">[SYS]</span> AI Engine querying logic patterns...</p>
+<p class="flex items-center gap-2">
+<span class="text-primary-fixed-dim">[SYS]</span> Compiling insight vectors 
+                        <span class="inline-block w-2 h-4 bg-inverse-on-surface cursor-blink"></span>
+</p>
+</div>
+</div>
+</main>
+</div>
+<script src="js/app.js"></script>
+</body></html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CODE_ZINE - Architecture</title>
+<!-- Google Fonts: Anton, Chivo, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Chivo:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#ffdbd2",
+                        "secondary": "#7a5900",
+                        "tertiary": "#a4371a",
+                        "primary-container": "#3c6ee1",
+                        "on-secondary-fixed": "#261900",
+                        "secondary-fixed-dim": "#fdbc13",
+                        "surface-container-highest": "#e5e2e1",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-tertiary-fixed": "#3c0800",
+                        "surface-variant": "#e5e2e1",
+                        "on-primary-fixed": "#001849",
+                        "on-surface": "#1c1b1b",
+                        "surface-bright": "#fcf9f8",
+                        "background": "#fcf9f8",
+                        "surface-dim": "#dcd9d9",
+                        "on-surface-variant": "#434653",
+                        "on-background": "#1c1b1b",
+                        "surface": "#fcf9f8",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#862205",
+                        "tertiary-container": "#c54f2f",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#fdbc13",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-fixed": "#ffdea3",
+                        "surface-container-high": "#ebe7e7",
+                        "outline-variant": "#c3c6d6",
+                        "on-secondary-fixed-variant": "#5d4200",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#dae1ff",
+                        "inverse-primary": "#b3c5ff",
+                        "on-tertiary-container": "#fffbff",
+                        "primary": "#1754c7",
+                        "outline": "#737685",
+                        "on-secondary-container": "#6b4d00",
+                        "surface-tint": "#1c57ca",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-fixed-dim": "#b3c5ff",
+                        "on-error": "#ffffff",
+                        "on-primary-fixed-variant": "#003fa3",
+                        "inverse-surface": "#313030",
+                        "on-primary-container": "#fefcff",
+                        "surface-container": "#f0edec",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb4a1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "unit": "4px",
+                        "margin-edge": "32px",
+                        "shadow-offset": "8px",
+                        "border-weight": "4px"
+                    },
+                    "fontFamily": {
+                        "code-md": ["JetBrains Mono"],
+                        "display": ["Anton"],
+                        "headline-lg": ["Anton"],
+                        "headline-md": ["Anton"],
+                        "body-md": ["Chivo"],
+                        "headline-lg-mobile": ["Anton"],
+                        "body-lg": ["Chivo"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "code-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "display": ["80px", { "lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "400" }],
+                        "headline-lg": ["48px", { "lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Pattern Overlay for background */
+        .bg-pattern-dots {
+            background-image: radial-gradient(var(--tw-colors-outline-variant) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* SVG Path Animation */
+        .dash-animate {
+            stroke-dasharray: 8 8;
+            animation: dash 2s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -16;
+            }
+        }
+    </style>
+</head>
+<body class="bg-surface-container-low text-on-background font-body-md h-screen flex overflow-hidden">
+<!-- SideNavBar -->
+<nav class="bg-surface fixed left-0 top-0 h-screen w-72 border-r-border-weight border-on-surface flex flex-col p-6 gap-y-4 z-50">
+<!-- Header -->
+<div class="mb-8 border-b-border-weight border-on-surface pb-6">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-10 h-10 bg-primary-container border-2 border-on-surface flex items-center justify-center">
+<span class="material-symbols-outlined icon-fill text-on-primary-container">data_object</span>
+</div>
+<div>
+<h1 class="font-display text-headline-md text-on-surface uppercase tracking-tighter">ANALYSIS_BOT</h1>
+<p class="font-code-md text-label-sm text-on-surface-variant">v2.4.0_STABLE</p>
+</div>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<div class="flex flex-col gap-2 flex-1">
+<!-- Overview (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 font-code-md text-code-md text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all" href="Overview_Dashboard.html">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                Overview
+            </a>
+<!-- Explorer (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 font-code-md text-code-md text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all" href="File_Explorer.html">
+<span class="material-symbols-outlined" data-icon="folder_open">folder_open</span>
+                Explorer
+            </a>
+<!-- Architecture (Active) -->
+<a class="flex items-center gap-3 px-4 py-3 font-code-md text-code-md bg-secondary-container text-on-secondary-container border-4 border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] translate-x-1 translate-y-1 transition-all" href="Architecture_View.html">
+<span class="material-symbols-outlined icon-fill" data-icon="account_tree">account_tree</span>
+                Architecture
+            </a>
+<!-- AI_Chat (Inactive) -->
+<a class="flex items-center gap-3 px-4 py-3 font-code-md text-code-md text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all" href="AI_Chat_Assistant.html">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+                AI_Chat
+            </a>
+</div>
+<!-- CTA -->
+<div class="mt-auto mb-6">
+<button class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-primary border-4 border-on-surface text-on-primary font-code-md text-code-md uppercase hover:bg-surface-tint shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all">
+<span class="material-symbols-outlined">bolt</span>
+                UPGRADE_PLAN
+            </button>
+</div>
+<!-- Footer Tabs -->
+<div class="flex flex-col gap-2 border-t-border-weight border-on-surface pt-6">
+<a class="flex items-center gap-3 px-4 py-2 font-code-md text-code-md text-on-surface hover:bg-surface-container-high transition-all" href="Overview_Dashboard.html">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+                Docs
+            </a>
+<a class="flex items-center gap-3 px-4 py-2 font-code-md text-code-md text-on-surface hover:bg-surface-container-high transition-all" href="Hero_Landing.html">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="ml-72 flex-1 flex flex-col relative h-full">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 flex h-20 w-full items-center justify-between px-margin-edge bg-surface border-b-4 border-on-surface">
+<!-- Brand / Search (Search on left per JSON) -->
+<div class="flex items-center gap-6">
+<div class="font-display text-headline-md text-on-surface uppercase tracking-tighter">
+                    CODE_ZINE
+                </div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container border-2 border-on-surface font-code-md text-code-md text-on-surface focus:outline-none focus:border-4 focus:border-primary transition-all placeholder:text-outline w-64 shadow-[2px_2px_0px_0px_rgba(28,27,27,1)]" placeholder="Search architecture..." type="text"/>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<button class="px-4 py-2 bg-surface-bright border-4 border-on-surface text-on-surface font-code-md text-code-md shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-secondary-fixed active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-size: 18px;">sync</span>
+                    SYNC_REPO
+                </button>
+<button class="w-12 h-12 flex items-center justify-center border-4 border-on-surface bg-surface-bright shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container active:translate-x-1 active:translate-y-1 active:shadow-none transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center border-4 border-on-surface bg-surface-bright shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container active:translate-x-1 active:translate-y-1 active:shadow-none transition-all">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-12 h-12 border-4 border-on-surface overflow-hidden shadow-[4px_4px_0px_0px_rgba(28,27,27,1)]">
+<img alt="Developer Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmWmAmk3h7w88jvVPDwkqyGGGrWhCK1Iseydko-5A7G_SPmD-1ixbvkOteonvhL7xHAuIYlqZTOaYkvccHS0SvSwUav_oAOXRB224gZ4AQYAYvN6plDKUSs2D-f5VmNjB7LVS5761nc9Boeys_6C5Forb8CdTFRxoBeFXeabc24I69RU3vDgEllQn320YXW0S4WrS6Y7D7wkGcCGrwTNMBp4TjcDBuFUwa5nWh3-bHm-5XrswJa7pWjTxInHzx5iVX3BN801ZRmPE"/>
+</div>
+</div>
+</header>
+<!-- Canvas Area -->
+<main class="flex-1 overflow-auto bg-pattern-dots p-gutter relative">
+<div class="max-w-6xl mx-auto h-full relative" style="min-height: 800px;">
+<!-- SVG Canvas for Connectors -->
+<svg class="absolute top-0 left-0 w-full h-full pointer-events-none z-0" style="overflow: visible;">
+<!-- Auth to API -->
+<path class="dash-animate" d="M 500 150 L 500 280 L 350 280 L 350 350" fill="none" stroke="#1c1b1b" stroke-width="6"></path>
+<!-- Arrowhead -->
+<polygon fill="#1c1b1b" points="340,340 360,340 350,355"></polygon>
+<!-- Frontend to API -->
+<path class="dash-animate" d="M 200 150 L 200 280 L 350 280 L 350 350" fill="none" stroke="#1c1b1b" stroke-width="6"></path>
+<polygon fill="#1c1b1b" points="340,340 360,340 350,355"></polygon>
+<!-- API to Database -->
+<path class="dash-animate" d="M 350 480 L 350 580" fill="none" stroke="#1c1b1b" stroke-width="6"></path>
+<polygon fill="#1c1b1b" points="340,570 360,570 350,585"></polygon>
+</svg>
+<!-- System Nodes Container (Absolute positioning for architectural layout) -->
+<div class="relative w-full h-full z-10">
+<!-- Node: Frontend -->
+<div class="absolute top-10 left-[50px] w-72 bg-primary-fixed border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
+<div class="border-b-4 border-on-surface p-3 bg-surface-bright flex justify-between items-center">
+<span class="font-label-sm text-label-sm uppercase text-on-surface">CLIENT_TIER</span>
+<span class="material-symbols-outlined text-on-surface" style="font-size: 16px;">laptop_mac</span>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">React Web App</h3>
+<p class="font-code-md text-code-md text-on-surface-variant">Serves static assets and provides user interface.</p>
+<div class="mt-4 flex gap-2">
+<span class="bg-surface border-2 border-on-surface px-2 py-1 font-label-sm text-label-sm">React 18</span>
+<span class="bg-surface border-2 border-on-surface px-2 py-1 font-label-sm text-label-sm">Vite</span>
+</div>
+</div>
+</div>
+<!-- Node: Auth -->
+<div class="absolute top-10 left-[450px] w-72 bg-tertiary-fixed border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
+<div class="border-b-4 border-on-surface p-3 bg-surface-bright flex justify-between items-center">
+<span class="font-label-sm text-label-sm uppercase text-on-surface">SECURITY_TIER</span>
+<span class="material-symbols-outlined text-on-surface" style="font-size: 16px;">shield_lock</span>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Auth Service</h3>
+<p class="font-code-md text-code-md text-on-surface-variant">Handles JWT issuance and user verification.</p>
+<div class="mt-4 flex gap-2">
+<span class="bg-surface border-2 border-on-surface px-2 py-1 font-label-sm text-label-sm">OAuth2</span>
+<span class="bg-surface border-2 border-on-surface px-2 py-1 font-label-sm text-label-sm">Redis</span>
+</div>
+</div>
+</div>
+<!-- Node: API -->
+<div class="absolute top-[350px] left-[150px] w-[400px] bg-secondary-fixed border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
+<div class="border-b-4 border-on-surface p-3 bg-surface-bright flex justify-between items-center">
+<span class="font-label-sm text-label-sm uppercase text-on-surface">APP_LOGIC_TIER</span>
+<span class="material-symbols-outlined text-on-surface" style="font-size: 16px;">api</span>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-2">Core API Gateway</h3>
+<p class="font-code-md text-code-md text-on-surface-variant mb-4">Routes requests, handles business logic, and aggregates data from underlying data stores.</p>
+<div class="grid grid-cols-2 gap-4 border-t-4 border-on-surface pt-4">
+<div>
+<span class="font-label-sm text-on-surface-variant uppercase block mb-1">Endpoints</span>
+<span class="font-display text-headline-md block text-on-surface">124</span>
+</div>
+<div>
+<span class="font-label-sm text-on-surface-variant uppercase block mb-1">Avg Latency</span>
+<span class="font-display text-headline-md block text-on-surface">42ms</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Node: Database -->
+<div class="absolute top-[600px] left-[200px] w-72 bg-secondary-container border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
+<div class="border-b-4 border-on-surface p-3 bg-surface-bright flex justify-between items-center">
+<span class="font-label-sm text-label-sm uppercase text-on-secondary-container">PERSISTENCE_TIER</span>
+<span class="material-symbols-outlined text-on-secondary-container" style="font-size: 16px;">database</span>
+</div>
+<div class="p-6">
+<h3 class="font-headline-md text-headline-md text-on-secondary-container mb-2">Main Cluster</h3>
+<p class="font-code-md text-code-md text-on-secondary-container opacity-80">Primary relational data storage.</p>
+<div class="mt-4 flex gap-2">
+<span class="bg-surface-bright border-2 border-on-surface px-2 py-1 font-label-sm text-label-sm text-on-surface">PostgreSQL</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Legend -->
+<div class="absolute bottom-6 right-6 bg-surface border-4 border-on-surface p-4 shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] z-20">
+<h4 class="font-headline-md text-body-md text-on-surface uppercase mb-3 border-b-2 border-on-surface pb-1">Legend</h4>
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 bg-primary-fixed border-2 border-on-surface"></div>
+<span class="font-code-md text-label-sm uppercase">Frontend Services</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 bg-secondary-fixed border-2 border-on-surface"></div>
+<span class="font-code-md text-label-sm uppercase">Business Logic</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 bg-secondary-container border-2 border-on-surface"></div>
+<span class="font-code-md text-label-sm uppercase">Data Storage</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-4 h-4 bg-tertiary-fixed border-2 border-on-surface"></div>
+<span class="font-code-md text-label-sm uppercase">Security &amp; Auth</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="js/app.js"></script>
+</body></html>

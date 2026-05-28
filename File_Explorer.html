@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Code Zine - Explorer</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Chivo:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#ffdbd2",
+                    "secondary": "#7a5900",
+                    "tertiary": "#a4371a",
+                    "primary-container": "#3c6ee1",
+                    "on-secondary-fixed": "#261900",
+                    "secondary-fixed-dim": "#fdbc13",
+                    "surface-container-highest": "#e5e2e1",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-tertiary-fixed": "#3c0800",
+                    "surface-variant": "#e5e2e1",
+                    "on-primary-fixed": "#001849",
+                    "on-surface": "#1c1b1b",
+                    "surface-bright": "#fcf9f8",
+                    "background": "#fcf9f8",
+                    "surface-dim": "#dcd9d9",
+                    "on-surface-variant": "#434653",
+                    "on-background": "#1c1b1b",
+                    "surface": "#fcf9f8",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#862205",
+                    "tertiary-container": "#c54f2f",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#fdbc13",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "secondary-fixed": "#ffdea3",
+                    "surface-container-high": "#ebe7e7",
+                    "outline-variant": "#c3c6d6",
+                    "on-secondary-fixed-variant": "#5d4200",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#dae1ff",
+                    "inverse-primary": "#b3c5ff",
+                    "on-tertiary-container": "#fffbff",
+                    "primary": "#1754c7",
+                    "outline": "#737685",
+                    "on-secondary-container": "#6b4d00",
+                    "surface-tint": "#1c57ca",
+                    "surface-container-low": "#f6f3f2",
+                    "primary-fixed-dim": "#b3c5ff",
+                    "on-error": "#ffffff",
+                    "on-primary-fixed-variant": "#003fa3",
+                    "inverse-surface": "#313030",
+                    "on-primary-container": "#fefcff",
+                    "surface-container": "#f0edec",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb4a1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "unit": "4px",
+                    "margin-edge": "32px",
+                    "shadow-offset": "8px",
+                    "border-weight": "4px"
+            },
+            "fontFamily": {
+                    "code-md": ["JetBrains Mono"],
+                    "display": ["Anton"],
+                    "headline-lg": ["Anton"],
+                    "headline-md": ["Anton"],
+                    "body-md": ["Chivo"],
+                    "headline-lg-mobile": ["Anton"],
+                    "body-lg": ["Chivo"],
+                    "label-sm": ["JetBrains Mono"]
+            },
+            "fontSize": {
+                    "code-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "display": ["80px", {"lineHeight": "80px", "letterSpacing": "-0.02em", "fontWeight": "400"}],
+                    "headline-lg": ["48px", {"lineHeight": "48px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "32px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        /* Base styles to ensure consistency if tailwind utilities are missed */
+        body {
+            background-color: #fcf9f8;
+            color: #1c1b1b;
+        }
+        
+        /* Custom scrollbar for neo-brutalist feel */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0edec; 
+            border-left: 4px solid #1c1b1b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1c1b1b; 
+        }
+    </style>
+</head>
+<body class="h-screen w-full flex overflow-hidden bg-background font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- Mobile Top App Bar (Hidden on md+) -->
+<header class="md:hidden sticky top-0 z-40 flex h-20 w-full items-center justify-between px-margin-edge bg-surface border-b-4 border-on-surface bg-surface flat no shadows on bar container">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-3xl">menu</span>
+<span class="font-display text-headline-md text-on-surface uppercase tracking-tighter">CODE_ZINE</span>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-on-surface">search</span>
+<span class="material-symbols-outlined text-on-surface">notifications</span>
+</div>
+</header>
+<!-- SideNavBar (Desktop Shell) -->
+<nav class="hidden md:flex fixed left-0 top-0 h-screen w-72 border-r-border-weight border-on-surface shadow-[8px_0px_0px_0px_rgba(28,27,27,1)] flex-col h-full p-6 gap-y-4 bg-surface z-50">
+<!-- Header -->
+<div class="mb-8 flex items-center gap-4 border-b-border-weight border-on-surface pb-6">
+<div class="h-12 w-12 bg-primary border-border-weight border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" data-icon="terminal">terminal</span>
+</div>
+<div>
+<h1 class="font-display text-headline-md text-on-surface uppercase tracking-tighter leading-none">ANALYSIS_BOT</h1>
+<p class="font-code-md text-label-sm text-on-surface-variant mt-1">v2.4.0_STABLE</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex-1 flex flex-col gap-y-3">
+<!-- Inactive: Overview -->
+<a class="flex items-center gap-4 p-3 text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all font-code-md text-code-md group" href="Overview_Dashboard.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="dashboard">dashboard</span>
+<span class="uppercase tracking-wide">Overview</span>
+</a>
+<!-- Active: Explorer -->
+<a class="flex items-center gap-4 p-3 bg-secondary-container text-on-secondary-container border-4 border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] translate-x-1 translate-y-1 font-code-md text-code-md group" href="File_Explorer.html">
+<span class="material-symbols-outlined" data-icon="folder_open" data-weight="fill">folder_open</span>
+<span class="uppercase tracking-wide font-bold">Explorer</span>
+</a>
+<!-- Inactive: Architecture -->
+<a class="flex items-center gap-4 p-3 text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all font-code-md text-code-md group" href="Architecture_View.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="account_tree">account_tree</span>
+<span class="uppercase tracking-wide">Architecture</span>
+</a>
+<!-- Inactive: AI_Chat -->
+<a class="flex items-center gap-4 p-3 text-on-surface border-4 border-transparent hover:border-on-surface hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:bg-surface-container-high transition-all font-code-md text-code-md group" href="AI_Chat_Assistant.html">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform" data-icon="smart_toy">smart_toy</span>
+<span class="uppercase tracking-wide">AI_Chat</span>
+</a>
+</div>
+<!-- Footer Actions -->
+<div class="mt-auto flex flex-col gap-y-4 pt-6 border-t-border-weight border-on-surface">
+<!-- CTA Button -->
+<button class="w-full bg-primary text-on-primary font-display text-headline-md py-3 px-4 border-border-weight border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all uppercase flex justify-center items-center gap-2">
+                UPGRADE_PLAN
+                <span class="material-symbols-outlined text-xl">bolt</span>
+</button>
+<div class="flex justify-between px-2">
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors font-code-md text-label-sm uppercase" href="Overview_Dashboard.html">
+<span class="material-symbols-outlined text-[18px]" data-icon="description">description</span>
+                    Docs
+                </a>
+<a class="flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors font-code-md text-label-sm uppercase" href="Hero_Landing.html">
+<span class="material-symbols-outlined text-[18px]" data-icon="logout">logout</span>
+                    Logout
+                </a>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-72 flex flex-col h-[calc(100vh-5rem)] md:h-screen p-4 md:p-gutter overflow-hidden bg-background">
+<!-- Workspace Header (Optional, adding for structural balance) -->
+<div class="hidden md:flex justify-between items-end mb-6 pb-4 border-b-border-weight border-on-surface">
+<div>
+<h2 class="font-display text-headline-lg uppercase tracking-tight text-on-surface">Repository_Explorer</h2>
+<p class="font-code-md text-code-md text-on-surface-variant mt-2">Navigating: Code_Zine_Frontend / src / components</p>
+</div>
+<div class="flex gap-4">
+<button class="bg-surface text-on-surface border-border-weight border-on-surface px-4 py-2 font-code-md text-code-md shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">sync</span> SYNC_REPO
+                </button>
+</div>
+</div>
+<!-- Layout Grid for Explorer -->
+<div class="flex-1 flex flex-col lg:flex-row gap-6 md:gap-gutter overflow-hidden">
+<!-- Left Panel: File Tree -->
+<section class="w-full lg:w-80 flex flex-col bg-surface border-border-weight border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] overflow-hidden shrink-0">
+<div class="p-4 border-b-border-weight border-on-surface bg-surface-container-high flex justify-between items-center">
+<span class="font-display text-headline-md uppercase text-on-surface">Directory</span>
+<span class="material-symbols-outlined text-on-surface">filter_list</span>
+</div>
+<div id="file-tree-container" class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 bg-surface"></div>
+</section>
+<!-- Right Panel: Active File Card -->
+<section class="flex-1 flex flex-col bg-surface border-border-weight border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] overflow-hidden relative">
+<!-- Decorative Graphic (Neo-Brutalist star) -->
+<div class="absolute top-4 right-4 text-on-surface opacity-10 pointer-events-none">
+<svg fill="currentColor" height="64" viewbox="0 0 24 24" width="64">
+<path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path>
+</svg>
+</div>
+<!-- File Card Header -->
+<header class="p-4 border-b-border-weight border-on-surface bg-surface-container flex flex-wrap gap-4 justify-between items-center z-10">
+<!-- Breadcrumbs (Bordered Chips) -->
+<div class="flex flex-wrap items-center gap-2">
+<span class="px-2 py-1 border-2 border-on-surface bg-surface font-code-md text-label-sm text-on-surface uppercase shadow-[2px_2px_0px_0px_rgba(28,27,27,1)]">src</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+<span class="px-2 py-1 border-2 border-on-surface bg-surface font-code-md text-label-sm text-on-surface uppercase shadow-[2px_2px_0px_0px_rgba(28,27,27,1)]">components</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">chevron_right</span>
+<span id="active-file-name" class="px-3 py-1 border-border-weight border-on-surface bg-primary-container text-on-primary-container font-code-md text-label-sm uppercase font-bold shadow-[2px_2px_0px_0px_rgba(28,27,27,1)]">Select a File</span>
+</div>
+<!-- Badges & Actions -->
+<div class="flex items-center gap-3">
+<div class="px-3 py-1 bg-secondary-container text-on-secondary-container border-border-weight border-on-surface font-display tracking-wide text-body-md uppercase shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] rotate-2">
+                            Summary_Ready
+                        </div>
+<button class="p-2 bg-surface border-border-weight border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Code Content Area -->
+<div id="code-content-container" class="flex-1 overflow-y-auto bg-surface p-6 font-code-md text-code-md leading-relaxed relative flex items-center justify-center text-on-surface-variant">
+Select a file from the explorer to view its contents.
+</div>
+<!-- Bottom Status Bar for Editor -->
+<footer class="border-t-border-weight border-on-surface bg-surface-container-low p-2 flex justify-between items-center font-code-md text-label-sm text-on-surface-variant">
+<div class="flex gap-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">error</span> 0 Errors</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">warning</span> 2 Warnings</span>
+</div>
+<div class="flex gap-4">
+<span>UTF-8</span>
+<span>TypeScript React</span>
+</div>
+</footer>
+</section>
+</div>
+</main>
+<script>
+        // Simple script to handle dummy interactions
+        document.querySelectorAll('.group.cursor-pointer').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active classes from all
+                document.querySelectorAll('.bg-primary.text-on-primary').forEach(el => {
+                    el.classList.remove('bg-primary', 'text-on-primary', 'shadow-[4px_4px_0px_0px_rgba(28,27,27,1)]', 'translate-x-1', 'translate-y-1');
+                    el.classList.add('border-2', 'border-transparent', 'hover:border-on-surface', 'hover:bg-surface-container-high');
+                    
+                    // Reset icon color
+                    const icon = el.querySelector('.material-symbols-outlined');
+                    if(icon) {
+                        icon.classList.remove('text-on-primary');
+                        if(icon.textContent === 'description' || icon.textContent === 'css') {
+                             icon.classList.add('text-on-surface-variant');
+                        } else {
+                            icon.classList.add('text-tertiary');
+                        }
+                    }
+                    
+                    // Reset text weight
+                    const text = el.querySelector('.font-code-md');
+                    if(text) text.classList.remove('font-bold');
+                });
+
+                // Set this as active (simplistic logic for demo)
+                this.classList.remove('border-2', 'border-transparent', 'hover:border-on-surface', 'hover:bg-surface-container-high');
+                this.classList.add('bg-primary', 'text-on-primary', 'shadow-[4px_4px_0px_0px_rgba(28,27,27,1)]', 'translate-x-1', 'translate-y-1', 'border-border-weight', 'border-on-surface');
+                
+                const icon = this.querySelector('.material-symbols-outlined');
+                if(icon) {
+                    icon.className = 'material-symbols-outlined text-on-primary';
+                }
+                const text = this.querySelector('.font-code-md');
+                if(text) text.classList.add('font-bold');
+            });
+        });
+    </script>
+<script src="js/app.js"></script>
+</body></html>
