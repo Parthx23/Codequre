@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 analyzeBtn.disabled = true;
                 
                 try {
-                    const response = await fetch('http://localhost:3000/api/analyze', {
+                    const response = await fetch('/api/analyze', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ repoUrl: url })
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } catch(e) {}
                 
                 try {
-                    const response = await fetch('http://localhost:3000/api/chat', {
+                    const response = await fetch('/api/chat', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ message, context })
