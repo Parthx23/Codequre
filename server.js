@@ -455,14 +455,45 @@ Return ONLY valid JSON. No markdown wraps.`;
 
 // API: Chat with Gemini
 app.post('/api/chat', async (req, res) => {
-    const { message } = req.body;
+    const { message, context } = req.body;
     
     if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'your_gemini_api_key_here') {
         return res.status(500).json({ error: 'Gemini API key is not configured in .env' });
     }
     
     try {
-        const prompt = `You are a helpful AI assistant. Answer the user's question clearly and concisely.
+        // Build a slim context summary to avoid token overload
+        let contextBlock = '';
+        if (context && context.repo) {
+            const repo = context.repo;
+            const topFiles = (context.fileTree || [])
+                .flatMap(n => n.children ? n.children.map(c => c.path) : [n.path])
+                .slice(0, 20)
+                .join(', ');
+            const insights = (context.insights || [])
+                .map(i => `[${i.severity.toUpperCase()}] ${i.title}: ${i.description}`)
+                .join('\n');
+            const health = (context.healthScores || [])
+                .map(h => `${h.label}: ${h.score}/100`)
+                .join(', ');
+            const langs = context.languages ? Object.keys(context.languages).join(', ') : repo.language;
+
+            contextBlock = `
+## Repository Context
+- **Name**: ${repo.fullName || repo.name}
+- **Description**: ${repo.description}
+- **Languages**: ${langs}
+- **Total Files**: ${repo.totalFiles}
+- **Stars**: ${repo.stars} | **Forks**: ${repo.forks}
+- **Health Scores**: ${health}
+- **Key Files**: ${topFiles}
+- **Insights**:
+${insights}
+`;
+        }
+
+        const prompt = `You are an expert AI code assistant. ${contextBlock ? 'You have been given context about a GitHub repository the user just analyzed. Use it to give specific, accurate answers.' : 'Answer the user helpfully.'}
+${contextBlock}
 User: ${message}`;
         
         const text = await generateWithRetry(prompt);
