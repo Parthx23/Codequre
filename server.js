@@ -1,4 +1,11 @@
-require('dotenv').config();
+// Force-load .env, overriding anything already in process.env (including dotenvx injections)
+require('dotenv').config({ override: true });
+process.on('uncaughtException', (err) => {
+    console.error('UNCAUGHT EXCEPTION (server kept alive):', err);
+});
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('UNHANDLED REJECTION (server kept alive):', reason);
+});
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
@@ -7,8 +14,28 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 app.use(express.static(__dirname));
+
+const GEMINI_MODEL = 'gemini-2.5-flash';
+const generateWithRetry = async (prompt, retries = 2) => {
+    const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = ai.getGenerativeModel({ model: GEMINI_MODEL });
+    for (let attempt = 1; attempt <= retries; attempt++) {
+        try {
+            const result = await model.generateContent(prompt);
+            return result.response.text();
+        } catch (err) {
+            if (err.status === 429 && attempt < retries) {
+                const delay = 2000;
+                console.warn(`Gemini 429 – retrying in ${delay / 1000}s (attempt ${attempt}/${retries})`);
+                await new Promise(r => setTimeout(r, delay));
+            } else {
+                throw err;
+            }
+        }
+    }
+};
 
 // GitHub API helper
 const getGithubHeaders = () => {
@@ -265,8 +292,7 @@ app.post('/api/analyze', async (req, res) => {
         let aiResults = null;
         if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here') {
             try {
-                const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-                const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+                // uses shared generateWithRetry helper below
                 
                 const prompt = `You are a professional software architect. Analyze this GitHub repository structure and dependencies list:
 Repository Name: ${repoInfo.fullName}
@@ -310,8 +336,7 @@ Based on this, return a JSON response in the following EXACT schema. Do not incl
     ]
   }
 }`;
-                const result = await model.generateContent(prompt);
-                let responseText = result.response.text();
+                let responseText = await generateWithRetry(prompt);
                 responseText = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
                 aiResults = JSON.parse(responseText);
             } catch (e) {
@@ -395,9 +420,6 @@ app.post('/api/analyze-file', async (req, res) => {
     }
     
     try {
-        const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
-        
         const prompt = `You are a static code analyzer. Analyze this file named "${fileName}":
 ---
 ${fileContent.slice(0, 8000)}
@@ -415,8 +437,7 @@ Based on the content (up to 8000 chars), return a JSON response in this exact fo
 }
 Return ONLY valid JSON. No markdown wraps.`;
         
-        const result = await model.generateContent(prompt);
-        let responseText = result.response.text();
+        let responseText = await generateWithRetry(prompt);
         responseText = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
         const analysis = JSON.parse(responseText);
         
@@ -434,34 +455,41 @@ Return ONLY valid JSON. No markdown wraps.`;
 
 // API: Chat with Gemini
 app.post('/api/chat', async (req, res) => {
-    const { message, context } = req.body;
+    const { message } = req.body;
     
     if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'your_gemini_api_key_here') {
         return res.status(500).json({ error: 'Gemini API key is not configured in .env' });
     }
     
     try {
-        const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        const prompt = `You are an AI assistant analyzing a GitHub repository. 
-Repository Context:
-${JSON.stringify(context, null, 2)}
-
-User Question: ${message}`;
+        const prompt = `You are a helpful AI assistant. Answer the user's question clearly and concisely.
+User: ${message}`;
         
-        const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
-        const response = await model.generateContent(prompt);
-        const text = response.response.text();
-        
+        const text = await generateWithRetry(prompt);
         res.json({ reply: text });
     } catch (error) {
         console.error('Gemini API Error:', error);
-        res.status(500).json({ error: 'Failed to get response from AI.' });
+        if (error.status === 429) {
+            return res.status(429).json({ error: 'Rate limit hit. Please wait a moment and try again.' });
+        }
+        if (error.status === 400) {
+            return res.status(500).json({ error: 'Gemini API key is invalid. Please update GEMINI_API_KEY in your .env file.' });
+        }
+        res.status(500).json({ error: 'Failed to get AI response. Please try again.' });
     }
 });
 
 if (process.env.NODE_ENV !== 'production') {
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
         console.log(`Server running at http://localhost:${port}`);
+    });
+    server.on('error', (e) => {
+        if (e.code === 'EADDRINUSE') {
+            console.error(`\nERROR: Port ${port} is already in use! Another instance is running in the background.`);
+            process.exit(1);
+        } else {
+            console.error("Server Error:", e);
+        }
     });
 }
 

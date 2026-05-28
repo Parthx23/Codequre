@@ -688,7 +688,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) throw new Error(data.error || 'Failed to chat');
                 addMessage(data.reply, false);
             } catch (err) {
-                document.getElementById(loadingId).remove();
+                const loadingEl = document.getElementById(loadingId);
+                if (loadingEl) loadingEl.remove();
                 addMessage(`Error: ${err.message}`, false);
             }
         };
