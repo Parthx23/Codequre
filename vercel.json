@@ -6,7 +6,15 @@
       "use": "@vercel/node"
     },
     {
-      "src": "*.html",
+      "src": "**/*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "js/**/*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.ico",
       "use": "@vercel/static"
     }
   ],
@@ -14,6 +22,10 @@
     {
       "src": "/api/(.*)",
       "dest": "/server.js"
+    },
+    {
+      "src": "/",
+      "dest": "/Hero_Landing.html"
     },
     {
       "src": "/(.*)",
