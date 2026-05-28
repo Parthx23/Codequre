@@ -3,7 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const repoUrl = sessionStorage.getItem('repoUrl');
 
     // Navigation and Sync Button Helper
-    const syncButtons = document.querySelectorAll('button:has(.material-symbols-outlined:contains("sync")), button:contains("SYNC_REPO")');
+    const syncButtons = Array.from(document.querySelectorAll('button')).filter(btn => {
+        return btn.textContent.includes('SYNC_REPO') || 
+               (btn.querySelector('.material-symbols-outlined') && 
+                btn.querySelector('.material-symbols-outlined').textContent.includes('sync'));
+    });
     syncButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             if (repoUrl) {
