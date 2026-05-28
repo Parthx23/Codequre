@@ -227,19 +227,19 @@
 <div class="flex flex-wrap gap-4">
 <div class="bg-primary-fixed text-on-primary-fixed border-[4px] border-on-surface px-4 py-2 font-code-md text-code-md uppercase flex items-center gap-2">
 <span class="material-symbols-outlined text-[18px]">account_tree</span>
-                        Total Deps: 142
+                        <span id="metric-total-deps">Total Deps: 0</span>
                     </div>
 <div class="bg-error-container text-on-error-container border-[4px] border-on-surface px-4 py-2 font-code-md text-code-md uppercase flex items-center gap-2">
 <span class="material-symbols-outlined text-[18px]">warning</span>
-                        Critical: 3
+                        <span id="metric-critical">Critical: 0</span>
                     </div>
 <div class="bg-secondary-container text-on-secondary-container border-[4px] border-on-surface px-4 py-2 font-code-md text-code-md uppercase flex items-center gap-2">
 <span class="material-symbols-outlined text-[18px]">build</span>
-                        Refactors: 12
+                        <span id="metric-refactors">Refactors: 0</span>
                     </div>
 <div class="bg-tertiary-fixed text-on-tertiary-fixed border-[4px] border-on-surface px-4 py-2 font-code-md text-code-md uppercase flex items-center gap-2">
 <span class="material-symbols-outlined text-[18px]">menu_book</span>
-                        Doc Coverage: 68%
+                        <span id="metric-docs">Doc Coverage: 0%</span>
                     </div>
 </div>
 <!-- Bento Grid -->
@@ -250,28 +250,8 @@
 <h3 class="font-headline-md text-headline-md text-on-error-container uppercase">Critical Vulnerabilities</h3>
 <span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">error</span>
 </div>
-<div class="p-6 flex-1 flex flex-col gap-4">
-<!-- Slabs -->
-<div class="border-b-[4px] border-on-surface pb-4">
-<div class="flex justify-between items-start mb-2">
-<span class="font-code-md text-code-md text-on-surface bg-surface-container px-2 py-1 border-[2px] border-on-surface">express-auth@1.4.2</span>
-<span class="font-label-sm text-error uppercase font-bold tracking-widest">CVE-2023-4412</span>
-</div>
-<p class="font-body-md text-on-surface-variant">Path traversal vulnerability in static file serving middleware. Update to &gt;= 1.5.0 immediately.</p>
-<div class="mt-3 font-code-md text-label-sm text-on-surface opacity-70">
-                                    &gt; located in /src/middleware/auth.ts:42
-                                </div>
-</div>
-<div class="border-b-[4px] border-on-surface pb-4">
-<div class="flex justify-between items-start mb-2">
-<span class="font-code-md text-code-md text-on-surface bg-surface-container px-2 py-1 border-[2px] border-on-surface">yaml-parser@0.9.1</span>
-<span class="font-label-sm text-error uppercase font-bold tracking-widest">High Risk</span>
-</div>
-<p class="font-body-md text-on-surface-variant">Arbitrary code execution via unsafe YAML deserialization in config loader.</p>
-<div class="mt-3 font-code-md text-label-sm text-on-surface opacity-70">
-                                    &gt; located in /config/loader.js:12
-                                </div>
-</div>
+<div id="vuln-container" class="p-6 flex-1 flex flex-col gap-4">
+<!-- Dynamic Vulnerability Slabs -->
 </div>
 <div class="p-4 border-t-[4px] border-error bg-surface-container-lowest">
 <button class="w-full bg-error text-on-error font-code-md text-code-md uppercase border-[4px] border-on-surface shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] py-2 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all active:bg-on-error-container">
@@ -291,12 +271,10 @@
 <div class="absolute -left-[14px] top-0 w-6 h-6 bg-secondary-fixed border-[4px] border-on-surface rounded-full flex items-center justify-center">
 <div class="w-2 h-2 bg-on-surface rounded-full"></div>
 </div>
-<h4 class="font-headline-md text-[18px] text-on-surface uppercase mb-1">Extract God Class</h4>
-<p class="font-body-md text-on-surface-variant mb-3">`DataProcessorService` exceeds 1,200 lines. Split into specialized handlers for SRP compliance.</p>
-<div class="bg-inverse-surface text-inverse-on-surface p-3 font-code-md text-label-sm overflow-x-auto border-[4px] border-on-surface">
-<span class="text-tertiary-fixed">- class DataProcessorService {</span><br/>
-<span class="text-primary-fixed-dim">+ class UserDataHandler {</span><br/>
-<span class="text-primary-fixed-dim">+ class PaymentDataHandler {</span>
+<h4 id="refactor-title" class="font-headline-md text-[18px] text-on-surface uppercase mb-1">Extract God Class</h4>
+<p id="refactor-desc" class="font-body-md text-on-surface-variant mb-3">`DataProcessorService` exceeds 1,200 lines. Split into specialized handlers for SRP compliance.</p>
+<div id="refactor-diff" class="bg-inverse-surface text-inverse-on-surface p-3 font-code-md text-label-sm overflow-x-auto border-[4px] border-on-surface">
+<!-- Original and new code diffs go here -->
 </div>
 </div>
 </div>
@@ -318,19 +296,12 @@
 </div>
 <div class="prose prose-lg max-w-none font-body-md text-on-surface">
 <h3 class="font-headline-md text-[24px] uppercase bg-surface-dim inline-block px-2 border-[2px] border-on-surface mb-4">Architecture Overview</h3>
-<p class="mb-6 leading-relaxed bg-surface-bright/80 p-1">
-                                    The core system implements a CQRS pattern across the primary microservices. Commands are dispatched via the <span class="font-code-md font-bold bg-primary-fixed px-1 border-[2px] border-on-surface">EventBusAdapter</span>, while queries are routed directly to read-replicas optimized for heavy geospatial indexing.
+<p id="spec-overview" class="mb-6 leading-relaxed bg-surface-bright/80 p-1">
+                                    Loading overview spec...
                                 </p>
 <h3 class="font-headline-md text-[24px] uppercase bg-surface-dim inline-block px-2 border-[2px] border-on-surface mb-4 mt-8">Recent Topology Shifts</h3>
-<ul class="list-none space-y-4 font-body-md">
-<li class="flex items-start gap-3 bg-surface-bright/80 p-1">
-<span class="material-symbols-outlined mt-1 text-primary">arrow_right_alt</span>
-<span>Authentication flow moved from <span class="font-code-md font-bold">/v1/auth</span> monolithic controller to standalone <span class="font-code-md font-bold text-tertiary-container">OAuth2 Edge Gateway</span>.</span>
-</li>
-<li class="flex items-start gap-3 bg-surface-bright/80 p-1">
-<span class="material-symbols-outlined mt-1 text-primary">arrow_right_alt</span>
-<span>Deprecated <span class="font-code-md font-bold text-on-surface-variant line-through">LegacySyncManager</span> in favor of WebSocket-driven state hydration.</span>
-</li>
+<ul id="spec-shifts" class="list-none space-y-4 font-body-md">
+<!-- Shifts list items go here -->
 </ul>
 </div>
 </div>

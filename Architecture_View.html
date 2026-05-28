@@ -236,7 +236,7 @@
 <!-- System Nodes Container (Absolute positioning for architectural layout) -->
 <div class="relative w-full h-full z-10">
 <!-- Node: Frontend -->
-<div class="absolute top-10 left-[50px] w-72 bg-primary-fixed border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
+<div id="arch-client" class="absolute top-10 left-[50px] w-72 bg-primary-fixed border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
 <div class="border-b-4 border-on-surface p-3 bg-surface-bright flex justify-between items-center">
 <span class="font-label-sm text-label-sm uppercase text-on-surface">CLIENT_TIER</span>
 <span class="material-symbols-outlined text-on-surface" style="font-size: 16px;">laptop_mac</span>
@@ -251,7 +251,7 @@
 </div>
 </div>
 <!-- Node: Auth -->
-<div class="absolute top-10 left-[450px] w-72 bg-tertiary-fixed border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
+<div id="arch-security" class="absolute top-10 left-[450px] w-72 bg-tertiary-fixed border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
 <div class="border-b-4 border-on-surface p-3 bg-surface-bright flex justify-between items-center">
 <span class="font-label-sm text-label-sm uppercase text-on-surface">SECURITY_TIER</span>
 <span class="material-symbols-outlined text-on-surface" style="font-size: 16px;">shield_lock</span>
@@ -266,7 +266,7 @@
 </div>
 </div>
 <!-- Node: API -->
-<div class="absolute top-[350px] left-[150px] w-[400px] bg-secondary-fixed border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
+<div id="arch-api" class="absolute top-[350px] left-[150px] w-[400px] bg-secondary-fixed border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
 <div class="border-b-4 border-on-surface p-3 bg-surface-bright flex justify-between items-center">
 <span class="font-label-sm text-label-sm uppercase text-on-surface">APP_LOGIC_TIER</span>
 <span class="material-symbols-outlined text-on-surface" style="font-size: 16px;">api</span>
@@ -287,7 +287,7 @@
 </div>
 </div>
 <!-- Node: Database -->
-<div class="absolute top-[600px] left-[200px] w-72 bg-secondary-container border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
+<div id="arch-database" class="absolute top-[600px] left-[200px] w-72 bg-secondary-container border-4 border-on-surface shadow-[8px_8px_0px_0px_rgba(28,27,27,1)] hover:shadow-[4px_4px_0px_0px_rgba(28,27,27,1)] hover:translate-x-1 hover:translate-y-1 transition-all cursor-pointer">
 <div class="border-b-4 border-on-surface p-3 bg-surface-bright flex justify-between items-center">
 <span class="font-label-sm text-label-sm uppercase text-on-secondary-container">PERSISTENCE_TIER</span>
 <span class="material-symbols-outlined text-on-secondary-container" style="font-size: 16px;">database</span>

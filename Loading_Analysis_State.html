@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html class="light" lang="en"><head>
-<meta http-equiv="refresh" content="3;url=Overview_Dashboard.html">
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>CODE_ZINE - Loading State</title>
@@ -161,19 +160,17 @@
 <div class="p-gutter border-b-border-weight border-on-surface bg-surface flex justify-between items-center z-10">
 <div>
 <h1 class="font-headline-lg text-headline-lg md:font-display md:text-display text-on-surface">ANALYZING...</h1>
-<p class="font-code-md text-code-md text-on-surface-variant uppercase tracking-widest mt-unit">Target: github.com/user/core-engine</p>
+<p id="load-target" class="font-code-md text-code-md text-on-surface-variant uppercase tracking-widest mt-unit">Target: github.com/user/core-engine</p>
 </div>
 <div class="hidden md:block">
 <span class="font-code-md text-code-md bg-secondary-container text-on-secondary-container px-3 py-1 border-2 border-on-surface">EST: 45s</span>
 </div>
 </div>
 <!-- Progress Segmented Bar -->
-<div class="w-full h-8 bg-surface border-b-border-weight border-on-surface flex z-10">
-<div class="w-1/4 h-full bg-primary border-r-border-weight border-on-surface"></div>
-<div class="w-1/4 h-full bg-primary border-r-border-weight border-on-surface"></div>
-<div class="w-1/4 h-full bg-primary-fixed border-r-border-weight border-on-surface relative overflow-hidden">
-<div class="absolute inset-0 bg-primary w-1/2"></div>
-</div>
+<div id="progress-bar" class="w-full h-8 bg-surface border-b-border-weight border-on-surface flex z-10">
+<div class="w-1/4 h-full bg-surface-container-highest border-r-border-weight border-on-surface"></div>
+<div class="w-1/4 h-full bg-surface-container-highest border-r-border-weight border-on-surface"></div>
+<div class="w-1/4 h-full bg-surface-container-highest border-r-border-weight border-on-surface"></div>
 <div class="w-1/4 h-full bg-surface-container-highest"></div>
 </div>
 <!-- Stages Content -->
@@ -189,44 +186,44 @@
 </div>
 </div>
 <!-- Right: Stages List -->
-<div class="w-full md:w-2/3 flex flex-col gap-unit">
-<!-- Stage 1: Done -->
-<div class="flex items-center justify-between p-4 border-border-weight border-on-surface bg-surface neo-shadow-sm mb-unit transition-all hover:-translate-y-1 hover:-translate-x-1">
+<div id="stages-container" class="w-full md:w-2/3 flex flex-col gap-unit">
+<!-- Stage 1 -->
+<div class="flex items-center justify-between p-4 border-border-weight border-outline-variant bg-surface-container-highest opacity-70">
 <div class="flex items-center gap-4">
-<div class="w-8 h-8 bg-tertiary-container flex items-center justify-center border-2 border-on-surface text-on-tertiary">
-<span class="material-symbols-outlined font-bold" data-icon="check">check</span>
+<div class="w-8 h-8 bg-surface flex items-center justify-center border-2 border-outline-variant text-outline-variant">
+<span class="font-code-md font-bold">1</span>
 </div>
 <div>
-<p class="font-headline-md text-headline-md leading-none">Scanning Repository</p>
-<p class="font-code-md text-code-md text-outline">1,204 files indexed</p>
+<p class="font-headline-md text-headline-md leading-none text-on-surface-variant">Scanning Repository</p>
+<p class="font-code-md text-code-md text-outline">Awaiting start...</p>
 </div>
 </div>
 </div>
-<!-- Stage 2: Done -->
-<div class="flex items-center justify-between p-4 border-border-weight border-on-surface bg-surface neo-shadow-sm mb-unit transition-all hover:-translate-y-1 hover:-translate-x-1">
+<!-- Stage 2 -->
+<div class="flex items-center justify-between p-4 border-border-weight border-outline-variant bg-surface-container-highest opacity-70">
 <div class="flex items-center gap-4">
-<div class="w-8 h-8 bg-tertiary-container flex items-center justify-center border-2 border-on-surface text-on-tertiary">
-<span class="material-symbols-outlined font-bold" data-icon="check">check</span>
+<div class="w-8 h-8 bg-surface flex items-center justify-center border-2 border-outline-variant text-outline-variant">
+<span class="font-code-md font-bold">2</span>
 </div>
 <div>
-<p class="font-headline-md text-headline-md leading-none">Mapping Dependencies</p>
-<p class="font-code-md text-code-md text-outline">Graph constructed</p>
+<p class="font-headline-md text-headline-md leading-none text-on-surface-variant">Mapping Dependencies</p>
+<p class="font-code-md text-code-md text-outline">Awaiting start...</p>
 </div>
 </div>
 </div>
-<!-- Stage 3: Active -->
-<div class="flex items-center justify-between p-4 border-border-weight border-on-surface bg-secondary-container neo-shadow-sm mb-unit transform -translate-y-1 -translate-x-1">
+<!-- Stage 3 -->
+<div class="flex items-center justify-between p-4 border-border-weight border-outline-variant bg-surface-container-highest opacity-70">
 <div class="flex items-center gap-4">
-<div class="w-8 h-8 bg-surface flex items-center justify-center border-2 border-on-surface text-on-surface animate-spin">
-<span class="material-symbols-outlined font-bold" data-icon="sync">sync</span>
+<div class="w-8 h-8 bg-surface flex items-center justify-center border-2 border-outline-variant text-outline-variant">
+<span class="font-code-md font-bold">3</span>
 </div>
 <div>
-<p class="font-headline-md text-headline-md leading-none text-on-secondary-container">Generating Insights</p>
-<p class="font-code-md text-code-md text-on-secondary-container/80">Running AI models...</p>
+<p class="font-headline-md text-headline-md leading-none text-on-surface-variant">Generating Insights</p>
+<p class="font-code-md text-code-md text-on-secondary-container/80">Awaiting start...</p>
 </div>
 </div>
 </div>
-<!-- Stage 4: Pending -->
+<!-- Stage 4 -->
 <div class="flex items-center justify-between p-4 border-border-weight border-outline-variant bg-surface-container-highest opacity-70">
 <div class="flex items-center gap-4">
 <div class="w-8 h-8 bg-surface flex items-center justify-center border-2 border-outline-variant text-outline-variant">
@@ -234,7 +231,7 @@
 </div>
 <div>
 <p class="font-headline-md text-headline-md leading-none text-on-surface-variant">Finalizing Report</p>
-<p class="font-code-md text-code-md text-outline">Awaiting previous steps</p>
+<p class="font-code-md text-code-md text-outline">Awaiting start...</p>
 </div>
 </div>
 </div>
@@ -249,16 +246,8 @@
 <div class="w-3 h-3 bg-primary rounded-full"></div>
 <span class="ml-2 text-outline">ANALYSIS_LOG</span>
 </div>
-<div class="space-y-1">
-<p><span class="text-secondary-fixed-dim">[INFO]</span> Initializing parser for AST...</p>
-<p><span class="text-secondary-fixed-dim">[INFO]</span> Found 42 endpoints in /api/v1</p>
-<p><span class="text-tertiary-fixed-dim">[WARN]</span> Cyclic dependency detected in AuthModule. Resolving...</p>
-<p><span class="text-secondary-fixed-dim">[INFO]</span> Calculating complexity metrics for src/core...</p>
-<p><span class="text-primary-fixed-dim">[SYS]</span> AI Engine querying logic patterns...</p>
-<p class="flex items-center gap-2">
-<span class="text-primary-fixed-dim">[SYS]</span> Compiling insight vectors 
-                        <span class="inline-block w-2 h-4 bg-inverse-on-surface cursor-blink"></span>
-</p>
+<div id="load-terminal-log" class="space-y-1">
+<p><span class="text-secondary-fixed-dim">[INFO]</span> Awaiting initialization trigger...</p>
 </div>
 </div>
 </main>

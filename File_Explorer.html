@@ -251,12 +251,12 @@ Select a file from the explorer to view its contents.
 <!-- Bottom Status Bar for Editor -->
 <footer class="border-t-border-weight border-on-surface bg-surface-container-low p-2 flex justify-between items-center font-code-md text-label-sm text-on-surface-variant">
 <div class="flex gap-4">
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">error</span> 0 Errors</span>
-<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">warning</span> 2 Warnings</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">error</span> <span id="file-errors">0</span> Errors</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">warning</span> <span id="file-warnings">0</span> Warnings</span>
 </div>
 <div class="flex gap-4">
 <span>UTF-8</span>
-<span>TypeScript React</span>
+<span id="file-lang">Plain Text</span>
 </div>
 </footer>
 </section>

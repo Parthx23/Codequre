@@ -229,25 +229,108 @@ app.post('/api/analyze', async (req, res) => {
           url: repoData.html_url,
           description: repoData.description || "An automated analysis workspace for high-performance apps.",
           language: topLanguage,
-          framework: topLanguage === "TypeScript" || topLanguage === "JavaScript" ? "Next.js 15" : `${topLanguage} Core`,
+          framework: topLanguage === "TypeScript" || topLanguage === "JavaScript" ? "Express/Next.js" : `${topLanguage} Core`,
           architectureStyle: "Modular MVC Architecture",
           packageManager: dependencies.length > 0 ? "npm" : "npm",
-          stars: repoData.stargazers_count || 12,
-          forks: repoData.forks_count || 3,
+          stars: repoData.stargazers_count || 0,
+          forks: repoData.forks_count || 0,
           lastUpdated: formatTimeAgo(repoData.updated_at),
-          totalFiles: rawFilesList.length || 45,
-          totalLines: rawFilesList.length * 120 || 5400,
+          totalFiles: rawFilesList.length || 0,
+          totalLines: rawFilesList.length * 120 || 0,
           contributors: 3
         };
+
+        const fallbackArchitecture = {
+          client: { name: "Client Tier", description: "Provides the user interface and serves pages", tech: [topLanguage, "HTML/CSS"] },
+          security: { name: "Security & Validation", description: "Validates inputs and handles configurations", tech: ["Environment variables"] },
+          api: { name: "Backend Logic", description: "Processes operations and handles data fetching", tech: [topLanguage] },
+          database: { name: "Data Persistence", description: "Primary relational or local data storage", tech: ["JSON Storage"] }
+        };
+
+        const fallbackRefactor = {
+          title: "Optimize file imports",
+          description: "Consider splitting large utilities in the codebase for modularity.",
+          original: "import * as Utils from './utils';\nconst data = Utils.process(input);",
+          refactored: "import { process } from './utils';\nconst data = process(input);"
+        };
+
+        const fallbackAutoDocSpec = {
+          overview: "A lightweight MVC application layout. Core application logic is centralized in the backend controller, communicating with files statically.",
+          shifts: [
+             `Modular design centered around ${topLanguage} code.`,
+             "Standard setup using relative paths for assets."
+          ]
+        };
+
+        let aiResults = null;
+        if (process.env.GEMINI_API_KEY && process.env.GEMINI_API_KEY !== 'your_gemini_api_key_here') {
+            try {
+                const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+                const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+                
+                const prompt = `You are a professional software architect. Analyze this GitHub repository structure and dependencies list:
+Repository Name: ${repoInfo.fullName}
+Description: ${repoInfo.description}
+Language: ${repoInfo.language}
+Files: ${JSON.stringify(rawFilesList.slice(0, 100))}
+Dependencies: ${JSON.stringify(dependencies)}
+
+Based on this, return a JSON response in the following EXACT schema. Do not include markdown wraps or anything except the raw JSON:
+{
+  "healthScores": [
+    { "label": "Complexity", "score": 75, "color": "#f59e0b", "description": "Short explanation of complexity score" },
+    { "label": "Maintainability", "score": 85, "color": "#22c55e", "description": "Short explanation" },
+    { "label": "Scalability", "score": 80, "color": "#3b82f6", "description": "Short explanation" },
+    { "label": "Security", "score": 90, "color": "#22c55e", "description": "Short explanation" },
+    { "label": "Tech Debt", "score": 60, "color": "#ef4444", "description": "Short explanation" },
+    { "label": "Test Coverage", "score": 45, "color": "#ef4444", "description": "Short explanation" }
+  ],
+  "insights": [
+    { "id": "INS-01", "severity": "warning", "title": "Potential issue title", "description": "Detailed explanation of the potential issue", "file": "/relative/path/to/file", "line": 42 },
+    { "id": "INS-02", "severity": "critical", "title": "Security Issue", "description": "Explanation", "file": "/path", "line": 1 },
+    { "id": "INS-03", "severity": "info", "title": "Optimization", "description": "Explanation", "file": "/path", "line": 15 }
+  ],
+  "architecture": {
+    "client": { "name": "Client Application", "description": "Brief description of client components", "tech": ["HTML5", "CSS"] },
+    "security": { "name": "Auth & Configuration", "description": "Handles variables and security headers", "tech": ["dotenv"] },
+    "api": { "name": "Backend Router", "description": "Express backend server components", "tech": ["Express.js", "Node.js"] },
+    "database": { "name": "Mock Datastore", "description": "In-memory or static store", "tech": ["JSON"] }
+  },
+  "refactor": {
+    "title": "Suggested Refactor",
+    "description": "Refactor description",
+    "original": "Code block of original code",
+    "refactored": "Code block of improved code"
+  },
+  "autoDocSpec": {
+    "overview": "Short markdown text describing the repository structure.",
+    "shifts": [
+      "Dynamic observation about organization",
+      "Dynamic observation 2"
+    ]
+  }
+}`;
+                const result = await model.generateContent(prompt);
+                let responseText = result.response.text();
+                responseText = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
+                aiResults = JSON.parse(responseText);
+            } catch (e) {
+                console.error("Gemini analysis failed", e);
+            }
+        }
 
         const insights = buildDynamicInsights(rawFilesList);
 
         res.json({
             repo: repoInfo,
             fileTree: fileTree,
+            languages: languages,
             dependencies: dependencies,
-            insights: insights,
-            healthScores: mockHealthScores
+            insights: aiResults?.insights || insights,
+            healthScores: aiResults?.healthScores || mockHealthScores,
+            architecture: aiResults?.architecture || fallbackArchitecture,
+            refactor: aiResults?.refactor || fallbackRefactor,
+            autoDocSpec: aiResults?.autoDocSpec || fallbackAutoDocSpec
         });
     } catch (error) {
         console.error('GitHub API Error:', error.response?.data || error.message);
@@ -263,6 +346,89 @@ app.post('/api/analyze', async (req, res) => {
         }
         
         res.status(statusCode).json({ error: errorMsg });
+    }
+});
+
+// API: Get File Content from GitHub
+app.post('/api/file-content', async (req, res) => {
+    const { repoUrl, filePath } = req.body;
+    const parsed = parseGithubUrl(repoUrl);
+    
+    if (!parsed || !filePath) {
+        return res.status(400).json({ error: 'Invalid repository URL or file path' });
+    }
+    
+    try {
+        const { owner, repo } = parsed;
+        const headers = getGithubHeaders();
+        const cleanPath = filePath.replace(/^\//, ''); // strip leading slash if any
+        
+        const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}/contents/${encodeURIComponent(cleanPath)}`, { headers });
+        
+        if (response.data && response.data.content) {
+            const decoded = Buffer.from(response.data.content, 'base64').toString('utf8');
+            return res.json({ content: decoded });
+        } else {
+            return res.status(400).json({ error: 'File is empty or could not be read' });
+        }
+    } catch (error) {
+        console.error('File Fetch Error:', error.response?.data || error.message);
+        res.status(500).json({ error: 'Failed to retrieve file content from GitHub' });
+    }
+});
+
+// API: Analyze Specific File via Gemini
+app.post('/api/analyze-file', async (req, res) => {
+    const { fileName, fileContent } = req.body;
+    
+    if (!fileName || !fileContent) {
+        return res.status(400).json({ error: 'Filename and content are required' });
+    }
+    
+    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'your_gemini_api_key_here') {
+        return res.json({
+            explanation: `Analysis bypassed (no GEMINI_API_KEY). Serves functional operations for ${fileName}.`,
+            errors: 0,
+            warnings: 0,
+            analysisList: []
+        });
+    }
+    
+    try {
+        const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        
+        const prompt = `You are a static code analyzer. Analyze this file named "${fileName}":
+---
+${fileContent.slice(0, 8000)}
+---
+
+Based on the content (up to 8000 chars), return a JSON response in this exact format:
+{
+  "explanation": "A concise 2-sentence summary explaining what this file does in the project.",
+  "errors": 0,
+  "warnings": 2,
+  "analysisList": [
+    "Brief finding 1 (e.g. Missing try-catch for API call)",
+    "Brief finding 2"
+  ]
+}
+Return ONLY valid JSON. No markdown wraps.`;
+        
+        const result = await model.generateContent(prompt);
+        let responseText = result.response.text();
+        responseText = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
+        const analysis = JSON.parse(responseText);
+        
+        res.json(analysis);
+    } catch (e) {
+        console.error("File analysis failed", e);
+        res.json({
+            explanation: `Error analyzing file. Standard module for ${fileName}.`,
+            errors: 0,
+            warnings: 0,
+            analysisList: []
+        });
     }
 });
 
@@ -282,7 +448,7 @@ ${JSON.stringify(context, null, 2)}
 
 User Question: ${message}`;
         
-        const model = ai.getGenerativeModel({ model: 'gemini-3.5-flash' });
+        const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
         const response = await model.generateContent(prompt);
         const text = response.response.text();
         
