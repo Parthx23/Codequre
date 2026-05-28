@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const API_BASE = isLocal ? 'http://localhost:3000' : '';
     const path = window.location.pathname;
     const repoUrl = sessionStorage.getItem('repoUrl');
 
@@ -148,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let repoData = null;
             let errorOccurred = false;
 
-            const apiPromise = fetch('/api/analyze', {
+            const apiPromise = fetch(`${API_BASE}/api/analyze`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ repoUrl })
@@ -405,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     try {
                         // Fetch File Content
-                        const res = await fetch('/api/file-content', {
+                        const res = await fetch(`${API_BASE}/api/file-content`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ repoUrl, filePath })
@@ -430,7 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (errorsEl) errorsEl.textContent = '...';
                         if (warningsEl) warningsEl.textContent = '...';
                         
-                        const analysisRes = await fetch('/api/analyze-file', {
+                        const analysisRes = await fetch(`${API_BASE}/api/analyze-file`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ fileName, fileContent: data.content })
@@ -593,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 7. AI Chat Assistant
     if (path.includes('AI_Chat_Assistant.html')) {
         const chatInput = document.getElementById('chat-input');
-        const chatSubmit = document.querySelector('button[type="submit"]');
+        const chatForm = document.getElementById('chat-form');
         const chatMessages = document.getElementById('chat-container');
         
         const addMessage = (text, isUser) => {
@@ -674,7 +676,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
             try {
-                const response = await fetch('/api/chat', {
+                const response = await fetch(`${API_BASE}/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message: queryText, context: repoData })
@@ -691,8 +693,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        if (chatSubmit && chatInput) {
-            chatSubmit.addEventListener('click', (e) => {
+        if (chatForm && chatInput) {
+            chatForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const text = chatInput.value.trim();
                 if (!text) return;
